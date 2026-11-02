@@ -31,10 +31,11 @@ jobs:
           head -c 300 forestx.html; echo
           grep -qi "<html" forestx.html || { echo "::error::Downloaded file does not look like HTML"; exit 1; }
 
-      - name: Inject ForestX launcher
+      - name: Patch ForestX UI into the client's own shell
         run: |
-          python3 tools/inject_launcher.py forestx.html launcher/forestx-launcher.snippet.html forestx.html
-          grep -q "FORESTX-LAUNCHER:BEGIN" forestx.html || { echo "::error::Launcher injection failed"; exit 1; }
+          python3 tools/patch_client.py forestx.html forestx.html
+          grep -q "FXPATCH1" forestx.html || { echo "::error::In-client patch failed"; exit 1; }
+          grep -q 'id="game_frame"' forestx.html || { echo "::error::game_frame missing after patch"; exit 1; }
           ls -lh forestx.html
 
       - name: Commit client if changed

@@ -24,42 +24,44 @@ python3 -m http.server 8000
 
 Deploy anywhere static: GitHub Pages (Settings → Pages → deploy from branch, root), Vercel, Netlify, etc.
 
-## The ForestX launcher (inside `forestx.html`)
+## Built into the client (not a separate launcher)
 
-Booting the client now runs a custom experience, all inside the same file:
+`forestx.html`'s **own** HTML shell is patched in place — there is no
+separate launcher screen layered on top:
 
-1. **Tranquil forest loading** — animated dawn forest, real progress bar
-   driven by the game's own boot stages (`BOOTSTAGE` / `__eaglerGameReady`)
-2. **The hill** — type your username (pixel avatar generated from it, saved locally)
-3. **ForestX Client menu** — **UNO** Singleplayer · **DOS** Multiplayer
-   (saved `wss://` servers, address copied for in-game paste) · **Settings**
-   (ambience, motion, particles, boot-performance flags)
+1. **Its own loading screen** (`#lx-boot`, the one already in the file with
+   real progress from the game's boot stages) is reworked into a tranquil
+   animated forest with the ForestX Client title and segmented progress
+   bar — plus the username field right on the hill. Type your name while
+   it loads; when it's done the loader fades by itself into the game's
+   own title screen. Nothing to click through.
+2. **Its own ForestX panel** (`Esc` → `F8`) gains a **▶ Play** tab:
+   username (same one from the loader, saved in the client's own settings
+   store and copied for the game's profile prompt), **UNO · Singleplayer**,
+   **DOS · Multiplayer**, **⚙ Settings**, and saved `wss://` servers
+   (Join copies the address for in-game paste — the game draws its menus
+   on canvas, so its own Singleplayer/Multiplayer buttons are the ones
+   that actually start a game).
 
-It sits on top of the client while the game boots underneath; the existing
-ForestX overlay (F8 menu, HUD, tools) is untouched. In game, a tiny
-grass-block button (bottom-right) reopens the launcher.
-
-Implementation: `launcher/forestx-launcher.snippet.html` is injected as one
-marked block after `<body>` by `tools/inject_launcher.py`. Removing the block
-reproduces the pristine downloaded client **byte-for-byte** — nothing in the
-game itself is modified. The launcher hides itself automatically if it ever
-errors, so it can never trap the game behind it.
+Everything before `<body>` — WASM, assets, the shell loader, the whole
+game — is byte-identical to the fetched file (asserted by the patcher).
+Only the client's body shell (boot screen + F8 panel) changes: +132/−29
+lines. `tools/patch_client.py` applies the patch with exact anchors and
+aborts untouched if any anchor doesn't match exactly once.
 
 ## Files
 
 ```
 index.html            Landing page (one Play button, one Download button)
-forestx.html          THE CLIENT — engine, assets, sounds, WASM + launcher, one file
+forestx.html          THE CLIENT — engine, assets, sounds, WASM, one file (shell patched, see above)
 styles.css            Landing page styling
-launcher/
-  forestx-launcher.snippet.html   Launcher source (edit this, then re-inject)
 tools/
-  inject_launcher.py              Injects/replaces the launcher block
+  patch_client.py     Applies the in-client UI patch (idempotent, anchor-checked)
 assets/
   hero-world.jpg      Voxel forest artwork
   favicon.svg         Grass-block favicon
 .github/workflows/
-  fetch-client.yml    Re-fetch forestx.html from v0-forestx.vercel.app + re-inject launcher
+  fetch-client.yml    Re-fetch forestx.html from v0-forestx.vercel.app + re-apply the patch
 ```
 
 ## Updating the client
@@ -67,13 +69,11 @@ assets/
 When a new build is published at `v0-forestx.vercel.app`:
 
 - **Actions tab → “Fetch ForestX client” → Run workflow** — downloads the new
-  client, re-injects the launcher, and commits, or
-- replace `forestx.html` manually, then run `python3 tools/inject_launcher.py`.
+  client, re-applies `tools/patch_client.py`, and commits, or
+- replace `forestx.html` manually, then run `python3 tools/patch_client.py`.
 
-## Updating the launcher
-
-Edit `launcher/forestx-launcher.snippet.html`, run
-`python3 tools/inject_launcher.py` (idempotent), reload the client.
+Recover the pristine unpatched client any time with
+`git show 95207d1:forestx.html > forestx.html`.
 
 ## Disclaimer
 
