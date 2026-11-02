@@ -2,26 +2,18 @@
 
 **A full Eaglercraft-style Minecraft experience packed into one HTML file.**
 
-This repo hosts the ForestX landing page. Play the client right in your browser,
-or download the single self-contained file and run it anywhere — even offline.
+This repo is the ForestX landing page. Play the client in your browser, or
+download the single self-contained file and run it anywhere — even offline.
 
 | | |
 |---|---|
-| ▶ **Play online** | https://v0-forestx.vercel.app/play |
+| ▶ **Play** | [`play.html`](play.html) — embeds the live client |
 | ↓ **Download client** | https://v0-forestx.vercel.app/forestx.html (~86 MB, one file) |
+| 🌐 **Live client** | https://v0-forestx.vercel.app/play |
 
-## Why ForestX
+## Run the landing page
 
-- **Instant play** — no installs, no accounts, no setup
-- **One single file** — engine, assets, sounds and WASM bundled into `forestx.html`
-- **Multiplayer ready** — connect to Eaglercraft-compatible WebSocket (`wss://`) servers
-- **Works offline** — save it to USB / desktop / school folder and double-click
-- **Full game feel** — survival & creative, worlds saved in your browser
-- **ForestX menu** — press `Esc`, then `F8` in-game for Look · HUD · Tools
-
-## This landing page
-
-Plain static HTML/CSS/JS — no build step. Open `index.html`, or serve the folder:
+No build step, no JavaScript dependencies — plain static files:
 
 ```bash
 python3 -m http.server 8000
@@ -30,21 +22,22 @@ python3 -m http.server 8000
 
 Deploy anywhere static: GitHub Pages (Settings → Pages → deploy from branch, root), Vercel, Netlify, etc.
 
-### Files
+## Files
 
 ```
-index.html          Landing page
-styles.css          Minecraft-flavoured styling, day/night themes
-script.js           Particles, mining playground, live keyboard, FAQ, counters
+index.html          Landing page — one Play button, one Download button
+play.html           Fullscreen embed of the live client (v0-forestx.vercel.app/play)
+styles.css          All styling for both pages
 assets/
-  hero-world.jpg    Voxel forest artwork (hero)
-  cave-world.jpg    Voxel cave artwork (showcase)
+  hero-world.jpg    Voxel forest artwork
   favicon.svg       Grass-block favicon
 ```
 
-Highlights: animated in-game HUD hero, a playable "mine the blocks" playground
-with inventory & levels, a keyboard that lights up as you type, live-looking
-server list, day/night toggle, and a download card wired to the real client file.
+The Play button links **same-tab** to `play.html` on purpose: `target="_blank"`
+links to the client get swallowed by popup blockers and embedded previews,
+making Play look broken. An internal page can't be blocked that way, and
+`play.html` includes a direct-open/download fallback if a browser or network
+blocks the embed.
 
 ## Disclaimer
 
