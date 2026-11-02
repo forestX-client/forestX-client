@@ -31,6 +31,12 @@ jobs:
           head -c 300 forestx.html; echo
           grep -qi "<html" forestx.html || { echo "::error::Downloaded file does not look like HTML"; exit 1; }
 
+      - name: Inject ForestX launcher
+        run: |
+          python3 tools/inject_launcher.py forestx.html launcher/forestx-launcher.snippet.html forestx.html
+          grep -q "FORESTX-LAUNCHER:BEGIN" forestx.html || { echo "::error::Launcher injection failed"; exit 1; }
+          ls -lh forestx.html
+
       - name: Commit client if changed
         run: |
           git config user.name "github-actions[bot]"

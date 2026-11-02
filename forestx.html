@@ -1067,6 +1067,559 @@ var TeaVM=TeaVM||{};TeaVM.wasmGC=TeaVM.wasmGC||(()=>{let n=new Map;let e=null;le
 	</script>
 </head>
 <body style="position:fixed;inset:0;margin:0;width:100%;height:100%;min-width:0;min-height:0;overflow:hidden;background-color:black;">
+<!-- FORESTX-LAUNCHER:BEGIN v1 — injected by tools/inject_launcher.py. Edit launcher/forestx-launcher.snippet.html, not forestx.html. -->
+<style id="fxl-style">
+#lx-boot{display:none!important}
+#fxl-root{position:fixed;inset:0;z-index:2147483647;overflow:hidden;color:#f2fbf3;font-family:"Segoe UI",system-ui,-apple-system,sans-serif;background:linear-gradient(180deg,#f7b267 0%,#a8d5a2 34%,#4e9455 62%,#1d4d28 100%);transition:opacity .65s ease}
+#fxl-root[data-stage="user"]{background:linear-gradient(180deg,#8fd0ff 0%,#cdeffd 30%,#8fd694 62%,#2e7d32 100%)}
+#fxl-root[data-stage="menu"],#fxl-root[data-stage="multi"],#fxl-root[data-stage="settings"]{background:linear-gradient(180deg,#2b1055 0%,#7597de 30%,#f2a65a 58%,#2e5c33 82%,#12351c 100%)}
+#fxl-root.fxl-hide{opacity:0;pointer-events:none}
+#fxl-root.fxl-gone{display:none}
+.fxl-scene{position:absolute;inset:-4%;z-index:0;transition:transform 1.8s cubic-bezier(.4,0,.2,1),filter 1.8s ease;pointer-events:none}
+#fxl-root[data-stage="loading"] .fxl-scene{transform:scale(1.03)}
+#fxl-root[data-stage="user"] .fxl-scene{transform:scale(1.14) translateY(-2.5%)}
+#fxl-root[data-stage="menu"] .fxl-scene{animation:fxlPan 30s ease-in-out infinite alternate}
+@keyframes fxlPan{from{transform:scale(1.1) translateX(-1.2%)}to{transform:scale(1.16) translateX(1.2%) translateY(-1%)}}
+.fxl-scene svg{width:100%;height:100%;display:block}
+.fxl-cloud{animation:fxlDrift linear infinite}
+@keyframes fxlDrift{from{transform:translateX(-40px)}to{transform:translateX(60px)}}
+.fxl-fog{animation:fxlFog 14s ease-in-out infinite alternate}
+@keyframes fxlFog{from{transform:translateX(-30px);opacity:.5}to{transform:translateX(40px);opacity:.85}}
+.fxl-sway{transform-box:fill-box;transform-origin:50% 100%;animation:fxlSway 5s ease-in-out infinite}
+@keyframes fxlSway{0%,100%{transform:rotate(-1.1deg)}50%{transform:rotate(1.2deg)}}
+#fxl-particles{position:absolute;inset:0;z-index:1;pointer-events:none}
+.fxl-vignette{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(120% 90% at 50% 42%,transparent 55%,rgba(3,12,5,.55) 100%)}
+.fxl-stage{position:absolute;inset:0;z-index:3;display:none;flex-direction:column;align-items:center;justify-content:center;padding:22px;text-align:center;overflow:auto}
+.fxl-stage.on{display:flex;animation:fxlIn .7s cubic-bezier(.2,.9,.3,1) both}
+@keyframes fxlIn{from{opacity:0;transform:translateY(22px) scale(.985);filter:blur(4px)}to{opacity:1;transform:none;filter:none}}
+.fxl-kicker{font-size:11px;font-weight:700;letter-spacing:.42em;text-transform:uppercase;color:#dff5d8;text-shadow:0 2px 8px #000a;margin-bottom:10px}
+.fxl-title{font-family:"Arial Black","Segoe UI",system-ui,sans-serif;font-weight:900;font-size:clamp(42px,9vw,92px);line-height:1;letter-spacing:.03em;color:#f7fff4;text-shadow:0 4px 0 #57a047,0 8px 0 #2c6423,0 13px 0 #173d10,0 22px 42px rgba(0,0,0,.55)}
+.fxl-title b{color:#7be382;font-weight:900}
+.fxl-title.small{font-size:clamp(34px,7vw,64px)}
+.fxl-sub{margin-top:12px;font-size:clamp(12px,2vw,15px);font-weight:700;letter-spacing:.55em;padding-left:.55em;color:#eaf7ec;text-transform:uppercase;text-shadow:0 2px 10px #000c}
+.fxl-card{background:linear-gradient(180deg,rgba(10,28,16,.8),rgba(6,17,10,.88));border:1px solid rgba(255,255,255,.22);border-radius:20px;box-shadow:0 30px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.18);backdrop-filter:blur(12px);padding:26px;width:min(580px,94vw)}
+.fxl-loadbar{height:22px;border:3px solid #06130a;background:#223522;box-shadow:inset 0 0 0 2px #ffffff2e,0 6px 18px rgba(0,0,0,.4);margin-top:26px;overflow:hidden}
+.fxl-loadfill{height:100%;width:0%;background:repeating-linear-gradient(45deg,#68d84b 0 12px,#46a81f 12px 24px);box-shadow:inset 0 3px 0 #b8f29a,inset 0 -4px 0 #256b0f;transition:width .25s ease;animation:fxlBarber 1s linear infinite}
+@keyframes fxlBarber{to{background-position:34px 0}}
+.fxl-loadmeta{display:flex;justify-content:space-between;gap:14px;margin-top:12px;font:700 12px ui-monospace,Consolas,monospace;color:#bfe6c3}
+.fxl-loadmeta .pct{color:#7be382;font-size:15px}
+.fxl-tip{margin-top:16px;color:#dcefe0;font-size:14px;min-height:20px}
+.fxl-stage-txt{display:block;margin-top:6px;color:#7ea487;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.fxl-error{display:none;margin-top:16px;text-align:left;background:#3a1414cc;border:1px solid #ff7b7266;border-radius:12px;padding:14px;font-size:13px;color:#ffd9d4;max-height:150px;overflow:auto;white-space:pre-wrap;word-break:break-word}
+.fxl-cubewrap{width:92px;height:92px;margin:0 auto 16px;perspective:520px;filter:drop-shadow(0 16px 20px rgba(0,0,0,.45))}
+.fxl-cube{position:relative;width:54px;height:54px;margin:18px auto;transform-style:preserve-3d;animation:fxlCube 7s ease-in-out infinite}
+@keyframes fxlCube{0%,100%{transform:rotateX(-22deg) rotateY(38deg) translateY(0)}50%{transform:rotateX(-22deg) rotateY(52deg) translateY(-8px)}}
+.fxl-face{position:absolute;width:54px;height:54px;border:2px solid rgba(0,0,0,.65)}
+.fxl-face.top{background:#6abe30;transform:rotateX(90deg) translateZ(27px)}
+.fxl-face.front{background:linear-gradient(180deg,#6abe30 0 30%,#8a5a2b 30%);transform:translateZ(27px)}
+.fxl-face.side{background:linear-gradient(180deg,#57a047 0 30%,#74481d 30%);transform:rotateY(90deg) translateZ(27px)}
+.fxl-sign{display:flex;flex-direction:column;align-items:center}
+.fxl-avatar{width:84px;height:84px;image-rendering:pixelated;border:3px solid #06130a;box-shadow:0 0 0 2px #ffffff33,0 12px 26px rgba(0,0,0,.45);background:#173d10;margin-bottom:16px}
+.fxl-h2{font-family:"Arial Black","Segoe UI",sans-serif;font-size:clamp(21px,4.4vw,32px);text-shadow:0 3px 0 #173d10,0 8px 22px rgba(0,0,0,.5);margin-bottom:8px}
+.fxl-lede{color:#dcefe0;font-size:15px;max-width:46ch;margin-bottom:20px;text-shadow:0 1px 6px #0009}
+.fxl-field{display:flex;gap:10px;width:min(440px,92vw)}
+.fxl-input{flex:1;min-width:0;background:#08160acc;border:2px solid #ffffff38;border-bottom:4px solid #000;color:#fff;font:700 19px "Segoe UI",system-ui,sans-serif;padding:14px 16px;border-radius:10px;outline:none;box-shadow:inset 0 2px 8px rgba(0,0,0,.6)}
+.fxl-input:focus{border-color:#7be382;box-shadow:0 0 0 3px #59c93c55,inset 0 2px 8px rgba(0,0,0,.6)}
+.fxl-input.bad{border-color:#ff7b72;animation:fxlShake .3s}
+@keyframes fxlShake{25%{transform:translateX(-6px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+.fxl-valid{margin-top:10px;font-size:13px;color:#bfe6c3;min-height:18px}
+.fxl-valid.err{color:#ffb3ac}
+.fxl-check{display:inline-flex;gap:9px;align-items:center;margin-top:14px;color:#dcefe0;font-weight:600;font-size:14px;cursor:pointer}
+.fxl-check input{width:19px;height:19px;accent-color:#59c93c}
+.fxl-note{margin-top:14px;color:#9fc3a5;font-size:12.5px;max-width:52ch}
+.fxl-btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-family:"Segoe UI",system-ui,sans-serif;font-weight:800;font-size:16px;color:#fff;background:linear-gradient(180deg,#74d84f,#46a81f 55%,#378a17);text-shadow:1px 2px 0 #1d4d0c;border:2px solid #06130a;box-shadow:inset 0 4px 0 #a6ec8a,inset 0 -5px 0 #256b0f,inset 4px 0 0 #4fae2a,inset -4px 0 0 #4fae2a,0 7px 0 rgba(0,0,0,.45);padding:15px 24px;cursor:pointer;transition:filter .15s,transform .08s;text-decoration:none}
+.fxl-btn:hover{filter:brightness(1.13)} .fxl-btn:active{transform:translateY(3px)}
+.fxl-btn:disabled{filter:grayscale(.7) brightness(.75);cursor:not-allowed}
+.fxl-btn.stone{background:linear-gradient(180deg,#a6a6a6,#747474 55%,#5a5a5a);text-shadow:1px 2px 0 #2b2b2b;box-shadow:inset 0 4px 0 #d2d2d2,inset 0 -5px 0 #3d3d3d,inset 4px 0 0 #848484,inset -4px 0 0 #848484,0 7px 0 rgba(0,0,0,.45)}
+.fxl-btn.ghost{background:rgba(6,19,10,.72);text-shadow:none;box-shadow:none;border:1px solid #ffffff3d;font-size:14px;padding:11px 18px;border-radius:10px}
+.fxl-btn.icon{padding:12px 15px;font-size:19px}
+.fxl-cta{margin-top:22px;width:min(440px,92vw);font-size:18px}
+.fxl-splash{position:relative;display:inline-block;margin-top:10px;color:#ffff54;font-weight:900;font-size:clamp(13px,2.4vw,18px);transform:rotate(-4deg);text-shadow:2px 2px 0 #3f3f00;animation:fxlSplash .9s ease-in-out infinite alternate}
+@keyframes fxlSplash{to{transform:rotate(-4deg) scale(1.07)}}
+.fxl-player{display:inline-flex;align-items:center;gap:10px;margin:20px 0 4px;background:rgba(6,19,10,.72);border:1px solid #ffffff30;border-radius:999px;padding:6px 16px 6px 7px;font-weight:700}
+.fxl-player img{width:30px;height:30px;image-rendering:pixelated;border:1px solid #000}
+.fxl-player button{background:none;border:0;color:#7be382;font-weight:700;cursor:pointer;font-size:13px}
+.fxl-menu{display:flex;flex-direction:column;gap:14px;margin-top:24px;width:min(460px,94vw)}
+.fxl-menu .fxl-btn{justify-content:flex-start;padding:16px 20px;font-size:19px}
+.fxl-menu .cap{margin-left:auto;text-align:right;font-size:12px;font-weight:600;opacity:.88;text-shadow:none}
+.fxl-num{font-family:"Arial Black",sans-serif;background:rgba(0,0,0,.38);border:1px solid rgba(255,255,255,.35);padding:5px 10px;font-size:13px;letter-spacing:.12em}
+.fxl-foot{margin-top:26px;color:#dcefe0cc;font-size:12.5px;text-shadow:0 1px 5px #000}
+.fxl-foot kbd{background:#20242a;color:#fff;border:1px solid #000;border-bottom-width:3px;border-radius:4px;padding:1px 6px;font:700 11px ui-monospace,monospace}
+.fxl-list{width:min(520px,94vw);display:flex;flex-direction:column;gap:9px;margin:6px 0 16px;max-height:34vh;overflow:auto}
+.fxl-server{display:flex;align-items:center;gap:12px;text-align:left;background:#08160acc;border:1px solid #ffffff2e;border-radius:12px;padding:12px 14px;cursor:pointer;color:#f2fbf3;width:100%;font:600 14px "Segoe UI",sans-serif}
+.fxl-server:hover{border-color:#7be382}
+.fxl-server small{display:block;color:#9fc3a5;font:500 12px ui-monospace,monospace;word-break:break-all}
+.fxl-server .go{margin-left:auto;color:#7be382;font-weight:900;white-space:nowrap}
+.fxl-server .del{margin-left:8px;background:none;border:0;color:#ffb3ac;cursor:pointer;font-size:15px}
+.fxl-empty{color:#bfe6c3;background:#08160a99;border:1px dashed #ffffff30;border-radius:12px;padding:16px;font-size:14px}
+.fxl-add{display:grid;grid-template-columns:1fr 1.4fr auto;gap:8px;width:min(520px,94vw)}
+.fxl-add .fxl-input{font-size:14px;padding:11px 12px;font-weight:600}
+.fxl-rows{width:min(520px,94vw);text-align:left}
+.fxl-row{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:11px 2px;border-bottom:1px dashed rgba(255,255,255,.16);font-size:14.5px}
+.fxl-row small{display:block;color:#9fc3a5;font-size:12px;margin-top:2px}
+.fxl-row select{background:#08160a;color:#fff;border:1px solid #ffffff38;border-radius:8px;padding:8px;font-weight:600;max-width:190px}
+.fxl-row input[type=checkbox]{width:21px;height:21px;accent-color:#59c93c}
+.fxl-actions{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+#fxl-sound{position:absolute;z-index:6;top:14px;right:14px;background:rgba(6,19,10,.72);color:#dcefe0;border:1px solid #ffffff33;border-radius:999px;padding:9px 14px;font:700 13px "Segoe UI",sans-serif;cursor:pointer;backdrop-filter:blur(6px)}
+#fxl-sound:hover{border-color:#7be382;color:#fff}
+.fxl-skip{position:absolute;z-index:6;right:14px;bottom:14px;background:none;border:0;color:#ffffffb8;font:600 12.5px "Segoe UI",sans-serif;cursor:pointer;text-shadow:0 1px 5px #000}
+.fxl-skip:hover{color:#fff;text-decoration:underline}
+#fxl-toast{position:fixed;z-index:2147483647;left:50%;top:18px;transform:translate(-50%,-80px);background:rgba(6,19,10,.94);color:#f2fbf3;border:1px solid #59c93c;border-radius:12px;padding:12px 18px;font:600 14px "Segoe UI",system-ui,sans-serif;box-shadow:0 18px 40px rgba(0,0,0,.55);transition:transform .4s cubic-bezier(.2,1.4,.4,1);max-width:92vw;text-align:center;pointer-events:none}
+#fxl-toast.show{transform:translate(-50%,0)}
+#fxl-reopen{position:fixed;z-index:2147483646;right:12px;bottom:12px;width:46px;height:46px;border:2px solid rgba(0,0,0,.7);background:linear-gradient(180deg,#6abe30 0 34%,#8a5a2b 34%);cursor:pointer;opacity:.55;box-shadow:0 8px 20px rgba(0,0,0,.5);display:none}
+#fxl-reopen:hover{opacity:1}
+#fxl-root[data-motion="reduced"] *,#fxl-root[data-motion="reduced"] *::before,#fxl-root[data-motion="reduced"] *::after{animation:none!important;transition:none!important}
+@media (max-width:640px){.fxl-card{padding:20px}.fxl-add{grid-template-columns:1fr}.fxl-field .fxl-input{font-size:17px}.fxl-menu .cap{display:none}.fxl-cubewrap{transform:scale(.82);margin-bottom:2px}}
+@media (prefers-reduced-motion:reduce){#fxl-root *,#fxl-root *::before,#fxl-root *::after{animation-duration:.001s!important;transition-duration:.001s!important}}
+</style>
+
+<div id="fxl-root" data-stage="loading" role="dialog" aria-label="ForestX Client launcher">
+  <div class="fxl-scene" aria-hidden="true">
+    <svg viewBox="0 0 1440 810" preserveAspectRatio="xMidYMid slice" focusable="false">
+      <defs>
+        <filter id="fxl-soft" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="14"/></filter>
+        <symbol id="fxl-pine" viewBox="0 0 100 190">
+          <rect x="45" y="150" width="10" height="36" fill="#5d4030"/>
+          <polygon points="50,4 84,74 16,74" fill="currentColor"/>
+          <polygon points="50,44 92,122 8,122" fill="currentColor"/>
+          <polygon points="50,88 99,168 1,168" fill="currentColor"/>
+        </symbol>
+        <symbol id="fxl-oak" viewBox="0 0 160 190">
+          <path d="M74 190 L78 108 L62 78 M80 122 L104 88 M79 136 L52 108" stroke="#5d4030" stroke-width="11" fill="none" stroke-linecap="round"/>
+          <circle cx="52" cy="70" r="34" fill="currentColor"/><circle cx="88" cy="48" r="42" fill="currentColor"/>
+          <circle cx="118" cy="78" r="32" fill="currentColor"/><circle cx="76" cy="84" r="38" fill="currentColor"/>
+        </symbol>
+        <symbol id="fxl-cloud" viewBox="0 0 260 90">
+          <ellipse cx="72" cy="58" rx="58" ry="24" fill="#ffffff"/><ellipse cx="128" cy="42" rx="62" ry="30" fill="#ffffff"/>
+          <ellipse cx="188" cy="58" rx="56" ry="22" fill="#ffffff"/><rect x="24" y="52" width="214" height="24" rx="12" fill="#ffffff"/>
+        </symbol>
+      </defs>
+      <circle cx="1120" cy="150" r="72" fill="#fff3b0" opacity=".95"/>
+      <circle cx="1120" cy="150" r="118" fill="#ffdf8a" opacity=".34" filter="url(#fxl-soft)"/>
+      <g opacity=".9"><use href="#fxl-cloud" class="fxl-cloud" x="60" y="58" width="290" opacity=".85" style="animation-duration:52s"/><use href="#fxl-cloud" class="fxl-cloud" x="760" y="34" width="230" opacity=".65" style="animation-duration:70s"/><use href="#fxl-cloud" class="fxl-cloud" x="1160" y="110" width="250" opacity=".5" style="animation-duration:61s"/></g>
+      <path d="M0 430 L180 300 L330 392 L520 268 L720 390 L900 282 L1090 398 L1250 316 L1440 414 L1440 810 L0 810Z" fill="#35684a" opacity=".72"/>
+      <path d="M0 500 L120 438 L260 496 L430 420 L610 500 L790 428 L970 502 L1130 438 L1300 500 L1440 448 L1440 810 L0 810Z" fill="#275c36"/>
+      <g color="#1e4d2a">
+        <use href="#fxl-pine" x="30" y="390" width="92"/><use href="#fxl-pine" x="150" y="350" width="120"/><use href="#fxl-pine" x="330" y="382" width="100"/>
+        <use href="#fxl-pine" x="540" y="348" width="128"/><use href="#fxl-pine" x="760" y="388" width="98"/><use href="#fxl-pine" x="930" y="344" width="126"/>
+        <use href="#fxl-pine" x="1160" y="386" width="102"/><use href="#fxl-pine" x="1310" y="352" width="118"/>
+      </g>
+      <g class="fxl-fog" fill="#ffffff" filter="url(#fxl-soft)"><ellipse cx="300" cy="552" rx="330" ry="34"/><ellipse cx="1040" cy="528" rx="380" ry="30"/></g>
+      <path d="M-40 810 C180 610 430 560 720 600 C1010 640 1260 610 1490 720 L1490 810Z" fill="#3f9142"/>
+      <path d="M-40 810 C220 660 520 626 790 664 C1060 702 1280 680 1490 770 L1490 810Z" fill="#2e7d32"/>
+      <path d="M618 810 C660 742 716 712 700 664 C690 634 736 618 772 606" stroke="#c9b18a" stroke-width="24" fill="none" stroke-linecap="round" opacity=".8"/>
+      <g color="#245c2c"><use href="#fxl-oak" class="fxl-sway" x="8" y="486" width="210"/><use href="#fxl-oak" class="fxl-sway" x="1208" y="472" width="238" style="animation-delay:-2s"/><use href="#fxl-pine" x="1120" y="520" width="104"/><use href="#fxl-pine" x="236" y="536" width="96"/></g>
+      <g fill="#ffd54f"><circle cx="350" cy="716" r="5"/><circle cx="430" cy="742" r="4"/><circle cx="980" cy="724" r="5"/><circle cx="1080" cy="752" r="4"/><circle cx="560" cy="700" r="4"/></g>
+      <g fill="#fff"><circle cx="386" cy="732" r="4"/><circle cx="1026" cy="740" r="4"/><circle cx="870" cy="708" r="4"/></g>
+      <g stroke="#245c2c" stroke-width="5" stroke-linecap="round"><path d="M300 782 q5-20 14-26 M312 782 q0-22-8-28 M1130 784 q5-20 14-26 M1142 784 q0-22-8-28 M520 790 q5-18 13-24"/></g>
+    </svg>
+  </div>
+  <canvas id="fxl-particles" aria-hidden="true"></canvas>
+  <div class="fxl-vignette" aria-hidden="true"></div>
+  <button id="fxl-sound" type="button" aria-pressed="true" title="Forest ambience">🔊 Ambience</button>
+
+  <!-- STAGE 1 · BOOT -->
+  <section class="fxl-stage on" id="fxl-stage-loading" aria-label="Loading">
+    <div class="fxl-cubewrap" aria-hidden="true"><div class="fxl-cube"><span class="fxl-face top"></span><span class="fxl-face front"></span><span class="fxl-face side"></span></div></div>
+    <p class="fxl-kicker">You are entering</p>
+    <h1 class="fxl-title">FOREST<b>X</b></h1>
+    <p class="fxl-sub">Client</p>
+    <div class="fxl-card">
+      <div class="fxl-loadbar"><div class="fxl-loadfill" id="fxl-loadfill"></div></div>
+      <div class="fxl-loadmeta"><span id="fxl-loadmsg">Waking the forest…</span><span class="pct" id="fxl-loadpct">0%</span></div>
+      <span class="fxl-stage-txt" id="fxl-stagetxt"></span>
+      <p class="fxl-tip" id="fxl-tip"></p>
+      <div class="fxl-error" id="fxl-error"></div>
+      <div class="fxl-actions" id="fxl-error-actions" style="display:none">
+        <button class="fxl-btn stone" id="fxl-reload" type="button">↻ Reload</button>
+        <button class="fxl-btn ghost" id="fxl-enter-anyway" type="button">Show game anyway →</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGE 2 · USERNAME ON THE HILL -->
+  <section class="fxl-stage" id="fxl-stage-user" aria-label="Choose your username">
+    <div class="fxl-sign">
+      <canvas class="fxl-avatar" id="fxl-avatar" width="75" height="75" aria-hidden="true"></canvas>
+      <h2 class="fxl-h2">Who's exploring today?</h2>
+      <p class="fxl-lede">You've reached the old hill above the forest. Carve your name into the signpost before you head in.</p>
+      <div class="fxl-field">
+        <input class="fxl-input" id="fxl-name" type="text" maxlength="16" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Username" aria-label="Username">
+        <button class="fxl-btn stone icon" id="fxl-dice" type="button" title="Random name" aria-label="Generate a random username">🎲</button>
+      </div>
+      <p class="fxl-valid" id="fxl-valid">3–16 characters · letters, numbers and _</p>
+      <label class="fxl-check"><input type="checkbox" id="fxl-remember" checked> Remember my name on this device</label>
+      <button class="fxl-btn fxl-cta" id="fxl-continue" type="button">Enter the Forest →</button>
+      <p class="fxl-note">Your name is saved locally for the launcher. The first time the game itself asks for a profile name, we'll copy this one to your clipboard so you can paste it straight in.</p>
+    </div>
+  </section>
+
+  <!-- STAGE 3 · MAIN MENU -->
+  <section class="fxl-stage" id="fxl-stage-menu" aria-label="ForestX Client menu">
+    <p class="fxl-kicker">Welcome to</p>
+    <h2 class="fxl-title small">FOREST<b>X</b></h2>
+    <p class="fxl-sub" style="margin-top:8px">Client</p>
+    <span class="fxl-splash" id="fxl-splash">Also try touching grass!</span>
+    <div class="fxl-player"><img id="fxl-menu-avatar" alt=""><span id="fxl-menu-name">Explorer</span><button id="fxl-change-name" type="button">change</button></div>
+    <nav class="fxl-menu" aria-label="Main menu">
+      <button class="fxl-btn" id="fxl-uno" type="button"><span class="fxl-num">UNO</span> Singleplayer <span class="cap">Your worlds, this device</span></button>
+      <button class="fxl-btn" id="fxl-dos" type="button"><span class="fxl-num">DOS</span> Multiplayer <span class="cap">Servers &amp; friends</span></button>
+      <button class="fxl-btn stone" id="fxl-open-settings" type="button"><span class="fxl-num">⚙</span> Settings <span class="cap">Launcher &amp; performance</span></button>
+    </nav>
+    <p class="fxl-foot">Press <kbd>1</kbd> <kbd>2</kbd> <kbd>3</kbd> · In game: <kbd>Esc</kbd> then <kbd>F8</kbd> opens the ForestX menu<br>ForestX Client · Eaglercraft 26.3 · Launcher v1</p>
+  </section>
+
+  <!-- STAGE 4 · MULTIPLAYER -->
+  <section class="fxl-stage" id="fxl-stage-multi" aria-label="Multiplayer">
+    <h2 class="fxl-h2">🌐 Multiplayer</h2>
+    <p class="fxl-lede">Pick a saved server — we'll copy its address, then drop you into the game. Choose <b>Multiplayer → Add Server</b> in game and paste with <b>Ctrl+V</b>.</p>
+    <div class="fxl-list" id="fxl-server-list"></div>
+    <div class="fxl-add">
+      <input class="fxl-input" id="fxl-sv-name" type="text" maxlength="32" placeholder="Server name" aria-label="Server name">
+      <input class="fxl-input" id="fxl-sv-addr" type="text" maxlength="120" placeholder="wss://play.example.net" aria-label="Server address (wss)">
+      <button class="fxl-btn stone" id="fxl-sv-add" type="button">+ Add</button>
+    </div>
+    <p class="fxl-valid" id="fxl-sv-valid"></p>
+    <div class="fxl-actions">
+      <button class="fxl-btn" id="fxl-multi-enter" type="button">Open game multiplayer →</button>
+      <button class="fxl-btn ghost fxl-back" type="button">← Back</button>
+    </div>
+  </section>
+
+  <!-- STAGE 5 · SETTINGS -->
+  <section class="fxl-stage" id="fxl-stage-settings" aria-label="Settings">
+    <h2 class="fxl-h2">⚙ Settings</h2>
+    <p class="fxl-lede">Launcher options, applied instantly and saved on this device. Game options live in game (<b>Esc</b>), ForestX extras on <b>F8</b>.</p>
+    <div class="fxl-card fxl-rows">
+      <div class="fxl-row"><span>Username<small id="fxl-set-name"></small></span><button class="fxl-btn ghost" id="fxl-set-change" type="button">Change</button></div>
+      <div class="fxl-row"><span>Forest ambience<small>Generated wind &amp; birdsong, launcher only</small></span><input type="checkbox" id="fxl-set-sound"></div>
+      <div class="fxl-row"><span>Motion<small>Scene animation &amp; transitions</small></span><select id="fxl-set-motion"><option value="full">Full</option><option value="reduced">Reduced</option></select></div>
+      <div class="fxl-row"><span>Particles<small>Leaves, pollen &amp; fireflies</small></span><select id="fxl-set-particles"><option value="full">Full</option><option value="low">Low</option><option value="off">Off</option></select></div>
+      <div class="fxl-row"><span>Welcome message<small>A quick hello when you enter the game</small></span><input type="checkbox" id="fxl-set-toast"></div>
+      <div class="fxl-row"><span>Boot performance<small id="fxl-perf-now"></small></span><span style="display:flex;gap:8px;align-items:center"><select id="fxl-set-perf"><option value="auto">Auto (recommended)</option><option value="nomesh">No mesh workers</option><option value="singlethread">Compatibility</option></select><button class="fxl-btn ghost" id="fxl-perf-apply" type="button">Apply &amp; reboot</button></span></div>
+      <div class="fxl-row"><span>Reset launcher<small>Forgets name, servers &amp; these settings</small></span><button class="fxl-btn ghost" id="fxl-reset" type="button">Reset</button></div>
+    </div>
+    <div class="fxl-actions"><button class="fxl-btn ghost fxl-back" type="button">← Back to menu</button></div>
+  </section>
+
+  <button class="fxl-skip" id="fxl-skip" type="button">skip launcher →</button>
+</div>
+<div id="fxl-toast" role="status" aria-live="polite"></div>
+<button id="fxl-reopen" type="button" title="ForestX launcher (Esc first)" aria-label="Reopen ForestX launcher"></button>
+
+<script>
+(function(){
+"use strict";
+var root=document.getElementById("fxl-root");
+function killLauncher(){try{root.classList.add("fxl-gone");var st=document.getElementById("fxl-style");if(st)st.remove()}catch(e){try{root.style.display="none"}catch(_){}}}
+window.__fxlFailsafe=setTimeout(function(){if(!window.__fxlAlive)killLauncher()},6000);
+try{
+
+var $=function(i){return document.getElementById(i)};
+var stages={loading:$("fxl-stage-loading"),user:$("fxl-stage-user"),menu:$("fxl-stage-menu"),multi:$("fxl-stage-multi"),settings:$("fxl-stage-settings")};
+var stage="loading",entered=false,bootDone=false,username="";
+var reducedOS=false; try{reducedOS=matchMedia("(prefers-reduced-motion: reduce)").matches}catch(e){}
+var S={name:"",remember:true,sound:true,motion:reducedOS?"reduced":"full",particles:"full",toast:true,perf:"auto",servers:[]};
+try{var saved=JSON.parse(localStorage.getItem("forestx.launcher.v1")||"{}");for(var k in saved)if(k in S)S[k]=saved[k]}catch(e){}
+function save(){try{var o={};for(var k in S)o[k]=S[k];if(!S.remember)o.name="";localStorage.setItem("forestx.launcher.v1",JSON.stringify(o))}catch(e){}}
+function clamp(v,a,b){return Math.max(a,Math.min(b,v))}
+function gameCanvas(){return document.querySelector("#game_frame canvas")||document.querySelector("canvas:not(#fxl-particles):not(#fxl-avatar)")}
+function copyText(t){try{if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(t)}catch(e){}return Promise.resolve()}
+var toastTimer=0;
+function toast(msg,ms){if(!S.toast&&entered)return;var t=$("fxl-toast");t.textContent=msg;t.classList.add("show");clearTimeout(toastTimer);toastTimer=setTimeout(function(){t.classList.remove("show")},ms||5200)}
+
+/* keep launcher keystrokes & clicks out of the game while it's on top */
+["keydown","keyup","keypress","mousedown","mouseup","wheel","touchstart"].forEach(function(ev){
+  root.addEventListener(ev,function(e){e.stopPropagation()},{passive:ev==="wheel"||ev==="touchstart"});
+});
+
+/* ---------- stages ---------- */
+function showStage(name){
+  stage=name;root.dataset.stage=name;
+  for(var k in stages)stages[k].classList.toggle("on",k===name);
+  $("fxl-skip").style.display=(name==="loading")?"block":"none";
+  if(name==="user"){var inp=$("fxl-name");setTimeout(function(){try{inp.focus();inp.select()}catch(e){}},80)}
+  if(name==="menu"){syncMenu()}
+  if(name==="settings"){syncSettings()}
+  if(name==="multi"){renderServers()}
+}
+document.title="ForestX Client";
+
+/* ---------- avatar (deterministic pixel face from name) ---------- */
+var PALETTES=[["#7be382","#2f9e44"],["#54e0d2","#1f8a80"],["#f5c542","#b8860b"],["#ff9d76","#c65a31"],["#b39dfa","#6d4fc2"],["#8fd0ff","#3a78c2"]];
+function drawAvatar(name){
+  var c=$("fxl-avatar");if(!c||!c.getContext)return;
+  var x;try{x=c.getContext("2d")}catch(e){return}
+  if(!x)return;
+  var h=2166136261;name=name||"?";
+  for(var i=0;i<name.length;i++){h^=name.charCodeAt(i);h=(h*16777619)>>>0}
+  var pal=PALETTES[h%PALETTES.length],px=15;
+  x.fillStyle="#173d10";x.fillRect(0,0,75,75);
+  x.fillStyle=pal[1];x.fillRect(0,60,75,15);
+  for(var r=0;r<5;r++)for(var col=0;col<3;col++){
+    h=(h*16777619^h>>>13)>>>0;
+    if(h%2){x.fillStyle=pal[0];x.fillRect(col*px,r*px,px,px);x.fillRect((4-col)*px,r*px,px,px)}
+  }
+  try{$("fxl-menu-avatar").src=c.toDataURL()}catch(e){}
+}
+
+/* ---------- username ---------- */
+var NAME_RE=/^[A-Za-z0-9_]{3,16}$/;
+var NAME_BITS=[["Mossy","Fern","Pine","Birch","Ember","Frost","River","Stone","Maple","Cedar"],["Fox","Owl","Wolf","Bear","Deer","Badger","Hare","Newt","Crow","Bee"]];
+function validName(v){return NAME_RE.test(v)}
+function nameHint(){
+  var v=$("fxl-name").value.trim(),m=$("fxl-valid");
+  drawAvatar(v);
+  if(!v){m.textContent="3–16 characters · letters, numbers and _";m.className="fxl-valid"}
+  else if(!validName(v)){m.textContent="✕ 3–16 characters, letters/numbers/_ only — no spaces";m.className="fxl-valid err"}
+  else{m.textContent="✓ Looking good, "+v;m.className="fxl-valid"}
+  $("fxl-continue").disabled=!validName(v);
+}
+$("fxl-name").addEventListener("input",nameHint);
+$("fxl-name").addEventListener("keydown",function(e){if(e.key==="Enter")continueFromName()});
+$("fxl-dice").addEventListener("click",function(){
+  var n=NAME_BITS[0][Math.floor(Math.random()*NAME_BITS[0].length)]+NAME_BITS[1][Math.floor(Math.random()*NAME_BITS[1].length)]+Math.floor(Math.random()*90+10);
+  $("fxl-name").value=n;nameHint();$("fxl-name").focus();
+});
+function continueFromName(){
+  var v=$("fxl-name").value.trim();
+  if(!validName(v)){$("fxl-name").classList.remove("bad");void $("fxl-name").offsetWidth;$("fxl-name").classList.add("bad");nameHint();return}
+  username=v;S.name=v;S.remember=$("fxl-remember").checked;save();
+  startAmbienceIfWanted();
+  showStage("menu");
+}
+$("fxl-continue").addEventListener("click",continueFromName);
+if(S.name){$("fxl-name").value=S.name}
+$("fxl-remember").checked=S.remember!==false;
+nameHint();
+
+/* ---------- menu ---------- */
+var SPLASHES=["Also try touching grass!","Now with 100% more forest!","Punch trees. Responsibly.","Creepers fear this menu!","Uno? Dos? Trespassers beware!","Handcrafted in one HTML file!","The hill remembers you!","100% offline capable!","Runs on a potato!","Shhh… the trees are loading!"];
+function syncMenu(){
+  $("fxl-menu-name").textContent=username||S.name||"Explorer";
+  $("fxl-splash").textContent=SPLASHES[Math.floor(Math.random()*SPLASHES.length)];
+}
+$("fxl-change-name").addEventListener("click",function(){showStage("user")});
+$("fxl-uno").addEventListener("click",function(){enterGame("single")});
+$("fxl-dos").addEventListener("click",function(){showStage("multi")});
+$("fxl-open-settings").addEventListener("click",function(){showStage("settings")});
+document.querySelectorAll(".fxl-back").forEach(function(b){b.addEventListener("click",function(){showStage("menu")})});
+root.addEventListener("keydown",function(e){
+  if(stage!=="menu")return;
+  if(e.key==="1")enterGame("single");else if(e.key==="2")showStage("multi");else if(e.key==="3")showStage("settings");
+});
+
+/* ---------- multiplayer servers ---------- */
+function renderServers(){
+  var list=$("fxl-server-list");list.innerHTML="";
+  if(!S.servers.length){var d=document.createElement("div");d.className="fxl-empty";d.textContent="No servers saved yet. Add one below, or open the game's own server list.";list.appendChild(d);return}
+  S.servers.forEach(function(sv,i){
+    var row=document.createElement("div");row.className="fxl-server";row.setAttribute("role","button");row.tabIndex=0;
+    var txt=document.createElement("span");var nm=document.createElement("b");nm.textContent=sv.n;var ad=document.createElement("small");ad.textContent=sv.a;
+    txt.appendChild(nm);txt.appendChild(ad);
+    var go=document.createElement("span");go.className="go";go.textContent="Join →";
+    var del=document.createElement("button");del.className="del";del.type="button";del.textContent="✕";del.title="Remove server";
+    del.addEventListener("click",function(e){e.stopPropagation();S.servers.splice(i,1);save();renderServers()});
+    row.appendChild(txt);row.appendChild(go);row.appendChild(del);
+    function join(){enterGame("multi",sv)}
+    row.addEventListener("click",join);
+    row.addEventListener("keydown",function(e){if(e.key==="Enter")join()});
+    list.appendChild(row);
+  });
+}
+$("fxl-sv-add").addEventListener("click",function(){
+  var n=$("fxl-sv-name").value.trim(),a=$("fxl-sv-addr").value.trim(),m=$("fxl-sv-valid");
+  if(!/^wss:\/\/.+/.test(a)){m.textContent="✕ Address must start with wss://";m.className="fxl-valid err";return}
+  S.servers.push({n:n||a.replace(/^wss:\/\//,""),a:a});save();
+  $("fxl-sv-name").value="";$("fxl-sv-addr").value="";m.textContent="✓ Saved. Click it to join.";m.className="fxl-valid";
+  renderServers();
+});
+$("fxl-multi-enter").addEventListener("click",function(){enterGame("multi")});
+
+/* ---------- settings ---------- */
+function currentPerf(){
+  var q=(location.search||"");
+  return q.indexOf("singlethread")>=0?"singlethread":q.indexOf("nomesh")>=0?"nomesh":"auto (workers on)";
+}
+function applyMotion(){root.dataset.motion=S.motion}
+function syncSettings(){
+  $("fxl-set-name").textContent=username||S.name||"—";
+  $("fxl-set-sound").checked=!!S.sound;
+  $("fxl-set-motion").value=S.motion;
+  $("fxl-set-particles").value=S.particles;
+  $("fxl-set-toast").checked=!!S.toast;
+  $("fxl-set-perf").value=S.perf;
+  var isHttp=/^https?:$/.test(location.protocol);
+  $("fxl-perf-now").textContent=isHttp?("Now: "+currentPerf()):"Reboot options need the hosted (http) version";
+  $("fxl-perf-apply").disabled=!isHttp;
+  syncSoundBtn();
+}
+$("fxl-set-change").addEventListener("click",function(){showStage("user")});
+$("fxl-set-sound").addEventListener("change",function(e){S.sound=e.target.checked;save();syncSoundBtn();if(S.sound)startAmbienceIfWanted(true);else stopAmbience()});
+$("fxl-set-motion").addEventListener("change",function(e){S.motion=e.target.value;save();applyMotion()});
+$("fxl-set-particles").addEventListener("change",function(e){S.particles=e.target.value;save();resetParticles()});
+$("fxl-set-toast").addEventListener("change",function(e){S.toast=e.target.checked;save()});
+$("fxl-set-perf").addEventListener("change",function(e){S.perf=e.target.value;save()});
+$("fxl-perf-apply").addEventListener("click",function(){
+  var q=S.perf==="auto"?"":"?"+S.perf;
+  location.href=location.pathname+q+location.hash;
+});
+$("fxl-reset").addEventListener("click",function(){
+  if(!confirm("Forget your ForestX launcher name, servers and settings?"))return;
+  try{localStorage.removeItem("forestx.launcher.v1")}catch(e){}
+  location.reload();
+});
+
+/* ---------- ambience (synthesised wind + birds; starts on a user gesture) ---------- */
+var AC=null,ambOn=false,birdTimer=0;
+function syncSoundBtn(){var b=$("fxl-sound");b.textContent=S.sound?"🔊 Ambience":"🔇 Ambience";b.setAttribute("aria-pressed",S.sound?"true":"false")}
+function chirp(){
+  if(!AC||!ambOn)return;
+  var t=AC.currentTime,o=AC.createOscillator(),g=AC.createGain(),f=2100+Math.random()*900;
+  o.type="sine";o.frequency.setValueAtTime(f,t);
+  o.frequency.exponentialRampToValueAtTime(f*0.72,t+0.09);
+  o.frequency.exponentialRampToValueAtTime(f*1.08,t+0.16);
+  g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(0.035,t+0.03);g.gain.exponentialRampToValueAtTime(0.0001,t+0.22);
+  o.connect(g);g.connect(AC.destination);o.start(t);o.stop(t+0.25);
+  birdTimer=setTimeout(chirp,2600+Math.random()*6500);
+}
+function startAmbienceIfWanted(force){
+  if(!S.sound&&!force)return;
+  try{
+    if(!AC){
+      var Ctx=window.AudioContext||window.webkitAudioContext;if(!Ctx)return;
+      AC=new Ctx();
+      var len=2*AC.sampleRate,buf=AC.createBuffer(1,len,AC.sampleRate),d=buf.getChannelData(0),last=0;
+      for(var i=0;i<len;i++){var w=Math.random()*2-1;last=(last+0.02*w)/1.02;d[i]=last*3.2}
+      var src=AC.createBufferSource();src.buffer=buf;src.loop=true;
+      var filt=AC.createBiquadFilter();filt.type="lowpass";filt.frequency.value=420;
+      var g=AC.createGain();g.gain.value=0.055;
+      var lfo=AC.createOscillator(),lg=AC.createGain();lfo.frequency.value=0.07;lg.gain.value=0.028;
+      lfo.connect(lg);lg.connect(g.gain);
+      src.connect(filt);filt.connect(g);g.connect(AC.destination);src.start();lfo.start();
+    }
+    if(AC.state==="suspended")AC.resume();
+    if(!ambOn){ambOn=true;birdTimer=setTimeout(chirp,1200)}
+  }catch(e){}
+}
+function stopAmbience(){ambOn=false;clearTimeout(birdTimer);try{if(AC&&AC.state==="running")AC.suspend()}catch(e){}}
+$("fxl-sound").addEventListener("click",function(){S.sound=!S.sound;save();syncSoundBtn();if(S.sound)startAmbienceIfWanted(true);else stopAmbience()});
+root.addEventListener("pointerdown",function(){startAmbienceIfWanted()});
+syncSoundBtn();
+
+/* ---------- particles ---------- */
+var pc=$("fxl-particles"),px=null,parts=[],pw=0,ph=0,praf=0;
+try{px=pc.getContext("2d")}catch(e){}
+function pCount(){return S.motion==="reduced"?0:S.particles==="full"?70:S.particles==="low"?26:0}
+function makePart(anywhere){
+  return{x:Math.random()*pw,y:anywhere?Math.random()*ph:-12,s:2+Math.random()*4.5,vy:.25+Math.random()*.75,vx:-.35+Math.random()*.7,r:Math.random()*Math.PI,vr:-.03+Math.random()*.06,ph:Math.random()*6.28,hue:85+Math.random()*45,a:.35+Math.random()*.5};
+}
+function sizeParticles(){pw=pc.width=root.clientWidth||innerWidth;ph=pc.height=root.clientHeight||innerHeight}
+function resetParticles(){parts=[];var n=pCount();for(var i=0;i<n;i++)parts.push(makePart(true));if(px&&n&&!praf)praf=requestAnimationFrame(drawParticles)}
+function drawParticles(ts){
+  praf=0;if(!px||root.classList.contains("fxl-gone"))return;
+  px.clearRect(0,0,pw,ph);
+  var fire=(stage==="menu"||stage==="multi"||stage==="settings");
+  for(var i=0;i<parts.length;i++){var p=parts[i];
+    if(fire){p.x+=Math.sin(ts/1600+p.ph)*.45;p.y+=Math.cos(ts/1900+p.ph)*.32;
+      if(p.x<0)p.x=pw;if(p.x>pw)p.x=0;if(p.y<0)p.y=ph;if(p.y>ph)p.y=0;
+      px.save();px.globalAlpha=p.a*(.55+.45*Math.sin(ts/700+p.ph*3));px.fillStyle="#d8ff9a";px.shadowColor="#a4ff4d";px.shadowBlur=11;
+      px.beginPath();px.arc(p.x,p.y,p.s*.42,0,7);px.fill();px.restore();
+    }else{
+      p.y+=p.vy;p.x+=p.vx+Math.sin(p.y*.012+p.ph)*.45;p.r+=p.vr;
+      if(p.y>ph+12)parts[i]=makePart(false);
+      px.save();px.translate(p.x,p.y);px.rotate(p.r);px.globalAlpha=p.a;
+      px.fillStyle=stage==="user"?("#fff2b0"):("hsl("+p.hue+" 55% 40%)");
+      px.fillRect(-p.s/2,-p.s/2,p.s,p.s);px.restore();
+    }
+  }
+  if(parts.length)praf=requestAnimationFrame(drawParticles);
+}
+if(px){sizeParticles();resetParticles();addEventListener("resize",sizeParticles,{passive:true})}
+applyMotion();
+
+/* ---------- boot progress (same signals as the built-in loader) ---------- */
+var TIPS=["Esc first, then F8 — mid-fight menus are a bad idea.","F9 zooms. Your eyes will thank you.","The first launch unpacks the whole game. It gets faster.","Shadow lift (F8 → Look) makes caves far less scary.","Worlds save in this browser. Don't clear site data carelessly.","☕ Trainer tip: punch tree, get wood. Revolutionary."];
+$("fxl-tip").textContent="🌿 "+TIPS[Math.floor(Math.random()*TIPS.length)];
+var tipTimer=setInterval(function(){if(stage==="loading")$("fxl-tip").textContent="🌿 "+TIPS[Math.floor(Math.random()*TIPS.length)]},6000);
+function msgFor(p){return p>=100?"The forest is ready.":p<10?"Waking the forest…":p<35?"Unpacking blocks…":p<65?"Teaching creepers to hiss…":p<92?"Growing the title screen…":"Almost there…"}
+var t0=Date.now(),pct=0,tgt=0,logIdx=0,readyAt=0,lastMove=Date.now(),lastTgt=-1,crashed=false;
+var bootTimer=setInterval(function(){
+  var L=window.__log||[];if(logIdx>L.length)logIdx=0;
+  for(;logIdx<L.length;logIdx++){
+    var s=""+L[logIdx],m=/^BOOTSTAGE:(\d+):(.*)$/.exec(s);
+    if(m){tgt=Math.max(tgt,Math.min(96,(+m[1])*0.96));if(/^[ -~]{3,}$/.test(m[2]))$("fxl-stagetxt").textContent=m[2].slice(0,90)}
+    if(readyAt&&/music\.menu/.test(s))tgt=100;
+  }
+  if(!window.__loaded)tgt=Math.max(tgt,Math.min(10,(Date.now()-t0)/800));else tgt=Math.max(tgt,12);
+  if(window.__eaglerGameReady===true&&!readyAt)readyAt=Date.now();
+  if(readyAt&&Date.now()-readyAt>2600)tgt=100;
+  if(Date.now()-t0>240000)tgt=100;
+  if(tgt<96&&tgt>=12&&!readyAt)tgt=Math.min(96,tgt+0.02);
+  if(tgt!==lastTgt){lastTgt=tgt;lastMove=Date.now()}
+  pct+=(tgt-pct)*0.13;if(tgt-pct<0.3)pct=tgt;
+  var crashEl=document.querySelector("._eaglercraftX_crash_element");
+  if((crashEl||window.__err)&&!readyAt&&!crashed){
+    crashed=true;
+    $("fxl-error").style.display="block";$("fxl-error-actions").style.display="flex";
+    $("fxl-error").textContent="The game hit a problem while loading.\n"+(window.__err||((crashEl&&crashEl.textContent||"").slice(0,300)));
+  }
+  var stalled=Date.now()-lastMove,msg=msgFor(pct);
+  if(!bootDone&&!crashed&&stalled>60000&&pct<100){
+    $("fxl-error").style.display="block";$("fxl-error-actions").style.display="flex";
+    var last=""+((window.__log||[]).slice(-1)[0]||"");
+    $("fxl-error").textContent="Taking unusually long (stuck near "+Math.floor(pct)+"%). Your device may just be slow — you can keep waiting, reload, or peek at the game anyway.\nLast log: "+last.slice(0,160);
+    msg="Still growing… slow PCs build character.";
+  }
+  $("fxl-loadfill").style.width=pct+"%";
+  $("fxl-loadpct").textContent=Math.floor(pct)+"%";
+  $("fxl-loadmsg").textContent=msg;
+  if(pct>=100&&!bootDone){
+    bootDone=true;clearInterval(bootTimer);clearInterval(tipTimer);
+    setTimeout(function(){if(!entered&&stage==="loading")showStage("user")},650);
+  }
+},110);
+$("fxl-reload").addEventListener("click",function(){location.reload()});
+$("fxl-enter-anyway").addEventListener("click",function(){enterGame("anyway")});
+$("fxl-skip").addEventListener("click",function(){enterGame("skip")});
+
+/* ---------- enter the game ---------- */
+function enterGame(mode,server){
+  entered=true;bootDone=true;clearInterval(bootTimer);clearInterval(tipTimer);
+  stopAmbience();
+  var name=username||S.name||"Explorer";
+  var msg;
+  if(mode==="multi"&&server){copyText(server.a);msg="🌐 "+escapeHtml(server.n)+" address copied — in game: Multiplayer → Add Server → Paste (Ctrl+V)"}
+  else if(mode==="multi"){if(name)copyText(name);msg="🌐 Click the game, then Multiplayer. Username copied if it asks."}
+  else if(mode==="skip"||mode==="anyway"){msg="Launcher skipped. F8 in game still works — Esc first."}
+  else{if(name)copyText(name);msg="⛏ Welcome, "+name+"! Click the game once to capture your mouse."}
+  root.classList.add("fxl-hide");
+  setTimeout(function(){
+    root.classList.add("fxl-gone");$("fxl-reopen").style.display="block";
+    var c=gameCanvas();if(c&&c.focus)try{c.focus({preventScroll:true})}catch(e){}
+    toast(msg,6500);
+  },S.motion==="reduced"?30:680);
+}
+function escapeHtml(s){return String(s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+$("fxl-reopen").addEventListener("click",function(){
+  root.classList.remove("fxl-gone");
+  requestAnimationFrame(function(){root.classList.remove("fxl-hide")});
+  $("fxl-reopen").style.display="none";
+  entered=false;
+  showStage(username||S.name?"menu":"user");
+  resetParticles();
+});
+
+showStage("loading");
+window.__fxlAlive=true;
+clearTimeout(window.__fxlFailsafe);
+}catch(err){
+  try{console.error("ForestX launcher failed, removing it:",err)}catch(e){}
+  killLauncher();
+}
+})();
+</script>
+<!-- FORESTX-LAUNCHER:END -->
 <!-- ForestX Client overlay v7 -->
 <style id="fx-filter"></style>
 <style>
