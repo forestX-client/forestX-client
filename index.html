@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ForestX — Play Eaglercraft Online | One Single HTML File</title>
+<meta name="description" content="ForestX is a full Eaglercraft-style Minecraft experience packed into one HTML file. Play instantly in your browser, or download forestx.html (~86 MB) and play anywhere — even offline.">
+<meta name="theme-color" content="#0b1f0e">
+<meta property="og:title" content="ForestX — Play Eaglercraft Online">
+<meta property="og:description" content="A full browser Minecraft experience in ONE HTML file. Play online, or download it and play anywhere — even offline.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/hero-world.jpg">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<header class="nav">
+  <a class="logo" href="#home" aria-label="ForestX home">
+    <span class="logo-block" aria-hidden="true"><i></i></span>
+    <span class="logo-text">FOREST<em>X</em></span>
+  </a>
+  <nav class="nav-links" aria-label="Main">
+    <a href="#features">Features</a>
+    <a href="#download">Download</a>
+    <a href="#controls">Controls</a>
+    <a href="#faq">FAQ</a>
+  </nav>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="pulse-dot" aria-hidden="true"></span> SINGLE-FILE BROWSER CLIENT</p>
+      <h1 class="hero-title">FOREST<span>X</span></h1>
+      <p class="hero-sub">
+        A full <strong>Eaglercraft-style Minecraft experience</strong> packed into
+        <strong>one HTML file</strong>. Play it right here in your browser — or
+        <a href="#download">download the file</a> and run it anywhere, even offline.
+      </p>
+      <!-- The ONE Play button — opens the actual client file (forestx.html in this repo) directly. -->
+      <a class="btn btn-mc btn-big" href="forestx.html">▶&nbsp; PLAY</a>
+      <ul class="hero-checks">
+        <li>✓ No install</li>
+        <li>✓ No account</li>
+        <li>✓ Multiplayer ready</li>
+        <li>✓ Works offline*</li>
+      </ul>
+      <p class="hero-note">*With the <a href="#download">downloaded file</a>. Multiplayer needs a connection, obviously.</p>
+    </div>
+
+    <figure class="shot">
+      <div class="shot-bar" aria-hidden="true">
+        <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+        <span class="shot-url">forestx.html — running in your browser</span>
+      </div>
+      <img src="assets/hero-world.jpg" alt="A voxel forest world in ForestX at sunset" fetchpriority="high">
+    </figure>
+  </div>
+</section>
+
+<!-- ============ FEATURES ============ -->
+<section class="section" id="features">
+  <div class="wrap">
+    <p class="kicker">WHY FORESTX</p>
+    <h2 class="section-title">Everything in one block</h2>
+
+    <div class="cards">
+      <article class="card"><div class="card-icon">⚡</div><h3>Instant Play</h3><p>No installs, no accounts, no setup. Click play and you are in a world within seconds — everything runs client-side.</p></article>
+      <article class="card"><div class="card-icon">📦</div><h3>One Single File</h3><p>The entire client — engine, assets, sounds and WASM — bundled into a single <code>forestx.html</code> you can store anywhere.</p></article>
+      <article class="card"><div class="card-icon">👥</div><h3>Multiplayer Ready</h3><p>Connect to Eaglercraft-compatible WebSocket servers and play with friends, just like the desktop experience.</p></article>
+      <article class="card"><div class="card-icon">🔌</div><h3>Works Offline</h3><p>Save the file to a USB stick or your desktop and launch it with a double click. No internet required after download.</p></article>
+      <article class="card"><div class="card-icon">🎮</div><h3>Full Game Feel</h3><p>Survival and creative modes, worlds saved in your browser, sound packs and resource assets all included.</p></article>
+      <article class="card"><div class="card-icon">🔗</div><h3>Share Freely</h3><p>One file means one link. Send it to a friend, host it on a school drive, or drop it on any static host.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DOWNLOAD ============ -->
+<section class="section section-alt" id="download">
+  <div class="wrap">
+    <p class="kicker">GET THE FILE</p>
+    <h2 class="section-title">Take ForestX with you</h2>
+    <p class="section-lede">The download is the exact same client you play here — one portable HTML file that runs from anywhere, no web server needed.</p>
+
+    <div class="steps">
+      <article class="step"><span class="step-num">1</span><h3>Download the file</h3><p>Grab <code>forestx.html</code> — a single ~86 MB file, nothing else to install.</p></article>
+      <article class="step"><span class="step-num">2</span><h3>Keep it anywhere</h3><p>Desktop, USB stick, school folder — the file is fully self-contained.</p></article>
+      <article class="step"><span class="step-num">3</span><h3>Double-click to play</h3><p>Open it in any modern browser. Worlds are saved locally in browser storage.</p></article>
+    </div>
+
+    <div class="download-row">
+      <!-- The ONE Download button — same forestx.html file, saved instead of opened. -->
+      <a class="btn btn-stone btn-big" href="forestx.html" download>↓&nbsp; DOWNLOAD FORESTX.HTML</a>
+      <p class="download-meta"><code>forestx.html</code> · ~86 MB · single self-contained file</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTROLS ============ -->
+<section class="section" id="controls">
+  <div class="wrap wrap-narrow">
+    <p class="kicker">CONTROLS</p>
+    <h2 class="section-title">Before you jump in</h2>
+    <p class="section-lede">Click the game once to capture your mouse — <kbd>ESC</kbd> releases it.</p>
+
+    <div class="controls">
+      <div class="control"><span><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></span><p>Move</p></div>
+      <div class="control"><span><kbd>SPACE</kbd></span><p>Jump</p></div>
+      <div class="control"><span><kbd>SHIFT</kbd></span><p>Sneak</p></div>
+      <div class="control"><span><kbd>CTRL</kbd></span><p>Sprint</p></div>
+      <div class="control"><span><kbd>LMB</kbd></span><p>Mine / attack</p></div>
+      <div class="control"><span><kbd>RMB</kbd></span><p>Place / use</p></div>
+      <div class="control"><span><kbd>F8</kbd></span><p>ForestX menu — Look · HUD · Tools <small>(Esc first, then F8)</small></p></div>
+      <div class="control"><span><kbd>ESC</kbd></span><p>Release mouse / pause</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FAQ ============ -->
+<section class="section section-alt" id="faq">
+  <div class="wrap wrap-narrow">
+    <p class="kicker">QUESTIONS</p>
+    <h2 class="section-title">FAQ</h2>
+
+    <details class="faq"><summary>Is it really just one file?</summary><p>Yes. Engine, textures, sounds and the WASM runtime are all bundled into a single <code>forestx.html</code> (~86 MB). No installers, no launcher.</p></details>
+    <details class="faq"><summary>Do I need an account or a download to play?</summary><p>Neither. Hit <a href="forestx.html">Play</a> and you are in. Downloading is only for keeping a portable, offline copy.</p></details>
+    <details class="faq"><summary>Does it work offline / on a school Chromebook?</summary><p>Once the file is saved, singleplayer runs fully offline in any modern browser, Chromebooks included. Multiplayer still needs a connection.</p></details>
+    <details class="faq"><summary>Where are my worlds saved?</summary><p>In your browser's local storage, on the device and browser you played in. Clearing browser data can delete them.</p></details>
+    <details class="faq"><summary>How does multiplayer work?</summary><p>ForestX connects to Eaglercraft-compatible servers over WebSocket (<code>wss://…</code>). Add a server address in the in-game multiplayer menu and join.</p></details>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <a class="logo" href="#home"><span class="logo-block" aria-hidden="true"><i></i></span><span class="logo-text">FOREST<em>X</em></span></a>
+    <nav aria-label="Footer">
+      <a href="forestx.html">Play</a>
+      <a href="#download">Download</a>
+      <a href="https://github.com/forestX-client/forestX-client">GitHub</a>
+    </nav>
+  </div>
+  <div class="wrap footer-legal">
+    <p>ForestX is a fan-made browser client project. Not an official Minecraft product — not affiliated with, endorsed by, or approved by Mojang or Microsoft. “Minecraft” is a trademark of Mojang AB.</p>
+  </div>
+</footer>
+
+</body>
+</html>

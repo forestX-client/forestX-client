@@ -1,0 +1,57 @@
+name: Fetch ForestX client
+
+# Downloads the single-file client from the live deployment and commits
+# it to the branch, so the landing page can serve/play it directly.
+# Re-run manually (workflow_dispatch) whenever the client is updated.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [arena/39cba8c2-forestx-client]
+    paths: [.github/workflows/fetch-client.yml]
+
+permissions:
+  contents: write
+
+concurrency: fetch-client
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Download forestx.html
+        run: |
+          curl -fL --retry 3 --retry-delay 5 -o forestx.html "https://v0-forestx.vercel.app/forestx.html"
+          ls -lh forestx.html
+          size=$(stat -c%s forestx.html)
+          echo "size: $size bytes"
+          test "$size" -gt 10000000 || { echo "::error::Downloaded file is suspiciously small ($size bytes)"; exit 1; }
+          head -c 300 forestx.html; echo
+          grep -qi "<html" forestx.html || { echo "::error::Downloaded file does not look like HTML"; exit 1; }
+
+      - name: Patch ForestX UI into the client's own shell
+        run: |
+          python3 tools/patch_client.py forestx.html forestx.html
+          grep -q "FXPATCH1" forestx.html || { echo "::error::In-client patch failed"; exit 1; }
+          grep -q 'id="game_frame"' forestx.html || { echo "::error::game_frame missing after patch"; exit 1; }
+          ls -lh forestx.html
+
+      - name: Patch the game's own title-screen assets (Uno/Dos/Settings)
+        run: |
+          python3 -m pip install --break-system-packages --quiet Pillow
+          python3 tools/patch_assets.py forestx.html forestx.html
+          ls -lh forestx.html
+
+      - name: Commit client if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add forestx.html
+          if git diff --cached --quiet; then
+            echo "forestx.html unchanged — nothing to commit."
+            exit 0
+          fi
+          git commit -m "Fetch forestx.html client from v0-forestx.vercel.app"
+          git push
