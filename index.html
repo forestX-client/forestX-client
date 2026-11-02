@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ForestX Client — Minimalist. Packed with function.</title>
+<meta name="description" content="ForestX is a minimalist EaglercraftX 26.3 client with a built-in control panel, a real performance HUD, and every tool you actually need. No install. No account. No cheats.">
+<meta name="theme-color" content="#070b08">
+<meta property="og:title" content="ForestX Client — Minimalist. Packed with function.">
+<meta property="og:description" content="The Eaglercraft client that stays out of your way. Built-in panel, real HUD, zero clutter.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b120e'/%3E%3Cpath d='M32 12 18 26h8v10h12V26h8L32 12Z' fill='%235fd068'/%3E%3Crect x='28' y='38' width='8' height='14' rx='2' fill='%232f9e44'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="bg-fx" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-a"></div>
+  <div class="bg-glow bg-glow-b"></div>
+  <div class="bg-noise"></div>
+</div>
+
+<header class="site-header" id="top">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="ForestX home">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="22" height="22" fill="none">
+          <path d="M16 3 6 13h5v6h10v-6h5L16 3Z" fill="currentColor"/>
+          <rect x="13.5" y="21" width="5" height="8" rx="1.5" fill="currentColor" opacity=".55"/>
+        </svg>
+      </span>
+      <span class="brand-text">ForestX</span>
+      <span class="brand-badge">CLIENT</span>
+    </a>
+
+    <nav class="nav-links" aria-label="Main navigation">
+      <a href="#features">Features</a>
+      <a href="#panel">Panel</a>
+      <a href="#performance">Performance</a>
+      <a href="#controls">Controls</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+
+    <div class="nav-actions">
+      <a class="icon-btn" href="https://github.com/forestX-client/forestX-client" target="_blank" rel="noopener" aria-label="ForestX on GitHub">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.55v-2.1c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
+      </a>
+      <a class="btn btn-primary btn-sm nav-launch" href="client.html">Launch <span class="arrow" aria-hidden="true">↗</span></a>
+      <button class="menu-btn" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+
+  <div class="mobile-menu" id="mobile-menu" hidden>
+    <nav aria-label="Mobile navigation">
+      <a href="#features">Features</a>
+      <a href="#panel">Panel</a>
+      <a href="#performance">Performance</a>
+      <a href="#controls">Controls</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-primary" href="client.html">Launch client <span class="arrow" aria-hidden="true">↗</span></a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero">
+    <div class="container hero-grid">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> EaglercraftX 26.3 <span class="sep">·</span> Wasm-GC</div>
+        <h1>Minimalist.<br><span class="grad">Packed with function.</span></h1>
+        <p class="lede">ForestX is the Eaglercraft client that stays out of your way. A built-in control panel, a real performance HUD, and every tool you actually need — in one file.</p>
+        <div class="hero-cta">
+          <a class="btn btn-primary" href="client.html">Launch client <span class="arrow" aria-hidden="true">↗</span></a>
+          <a class="btn btn-ghost" href="#panel">Try the panel</a>
+        </div>
+        <ul class="hero-meta" aria-label="Highlights">
+          <li><svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true"><path d="m3 8.5 3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> No install</li>
+          <li><svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true"><path d="m3 8.5 3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> No account</li>
+          <li><svg viewBox="0 0 16 16" width="13" height="13" fill="none" aria-hidden="true"><path d="m3 8.5 3.2 3.2L13 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg> No cheats</li>
+        </ul>
+        <div class="key-row" aria-label="Key bindings">
+          <span class="keycap">F8</span><span class="key-label">panel</span>
+          <span class="keycap">F9</span><span class="key-label">zoom</span>
+          <span class="keycap">F7</span><span class="key-label">HUD</span>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="demo-frame" data-demo="hero">
+          <div class="demo-topbar">
+            <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+            <div class="demo-title">forestx — client preview</div>
+            <div class="demo-live"><span aria-hidden="true"></span> live</div>
+          </div>
+          <div class="demo-stage" data-stage>
+            <div class="scene-mount" data-scene></div>
+            <div class="hud" data-hud aria-hidden="true"></div>
+            <div class="keys" data-keys aria-hidden="true"></div>
+            <div class="cinema cinema-top" data-cinema-top></div>
+            <div class="cinema cinema-bottom" data-cinema-bottom></div>
+            <div class="center-dot" data-dot></div>
+            <div class="hotbar" data-hotbar aria-hidden="true"></div>
+            <button class="panel-fab" type="button" data-open-panel aria-label="Open ForestX panel" aria-expanded="true">
+              <span aria-hidden="true">☰</span> ForestX <kbd>F8</kbd>
+            </button>
+            <aside class="panel" data-panel aria-label="ForestX control panel">
+              <div class="panel-head">
+                <div>
+                  <b>ForestX Client</b>
+                  <small data-sass>Zero cheats. Pure skill. Allegedly.</small>
+                </div>
+                <button class="panel-close" type="button" data-close-panel aria-label="Close panel">✕</button>
+              </div>
+              <div class="panel-tabs" role="tablist" aria-label="Panel sections">
+                <button type="button" role="tab" data-tab="look" aria-selected="true">Look</button>
+                <button type="button" role="tab" data-tab="hud" aria-selected="false">HUD</button>
+                <button type="button" role="tab" data-tab="tools" aria-selected="false">Tools</button>
+              </div>
+              <div class="panel-body" data-panel-body><p class="hint">Enable JavaScript to try the panel.</p></div>
+              <div class="panel-foot">
+                <span>F8 toggles this panel</span>
+                <button type="button" data-reset>Reset</button>
+              </div>
+            </aside>
+          </div>
+          <div class="demo-footer">
+            <span class="demo-status"><span class="status-dot" aria-hidden="true"></span> <span data-demo-status>overlay ready</span></span>
+            <span class="demo-fps"><span data-fps>60</span> FPS</span>
+          </div>
+        </div>
+        <div class="float-card float-a" aria-hidden="true">
+          <span class="float-icon">◐</span>
+          <div><b>Shadow lift</b><small>caves, but visible</small></div>
+        </div>
+        <div class="float-card float-b" aria-hidden="true">
+          <span class="float-icon">✓</span>
+          <div><b>Zero cheats</b><small>pure skill, allegedly</small></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track">
+      <span>F8 panel</span><i>◆</i><span>F9 zoom</span><i>◆</i><span>F7 HUD</span><i>◆</i><span>Fullbright</span><i>◆</i><span>Cinematic bars</span><i>◆</i><span>Waypoints</span><i>◆</i><span>Nether converter</span><i>◆</i><span>Screenshot</span><i>◆</i><span>Recording</span><i>◆</i><span>Keystrokes</span><i>◆</i><span>CPS</span><i>◆</i><span>Frame time</span><i>◆</i><span>Memory</span><i>◆</i><span>One file</span><i>◆</i>
+      <span>F8 panel</span><i>◆</i><span>F9 zoom</span><i>◆</i><span>F7 HUD</span><i>◆</i><span>Fullbright</span><i>◆</i><span>Cinematic bars</span><i>◆</i><span>Waypoints</span><i>◆</i><span>Nether converter</span><i>◆</i><span>Screenshot</span><i>◆</i><span>Recording</span><i>◆</i><span>Keystrokes</span><i>◆</i><span>CPS</span><i>◆</i><span>Frame time</span><i>◆</i><span>Memory</span><i>◆</i><span>One file</span><i>◆</i>
+    </div>
+  </div>
+
+  <section class="stats-wrap" aria-label="Client facts">
+    <div class="container stats">
+      <div class="stat"><b>1</b><span>file. no installer.</span></div>
+      <div class="stat"><b>0</b><span>cheats. pure skill.</span></div>
+      <div class="stat"><b>6</b><span>HUD readouts.</span></div>
+      <div class="stat"><b>3</b><span>panel tabs.</span></div>
+      <div class="stat"><b>∞</b><span>worlds to get lost in.</span></div>
+    </div>
+  </section>
+
+  <section class="section" id="features">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> The toolkit</div>
+        <h2>Everything you need.<br><span class="muted-h">Nothing you don't.</span></h2>
+        <p>Six tools, one overlay, zero clutter. Toggle what you want and leave the rest off — it costs nothing.</p>
+      </div>
+
+      <div class="feature-grid">
+        <article class="feature-card">
+          <div class="feature-top"><span class="feature-icon" aria-hidden="true">◐</span><span class="tag">LOOK</span></div>
+          <h3>Look presets</h3>
+          <p>Default, Fullbright, Vivid, Cinematic, Night shift. One click changes the whole vibe.</p>
+          <div class="preset-row" aria-hidden="true">
+            <span class="preset-chip">Default</span><span class="preset-chip">Fullbright</span><span class="preset-chip">Vivid</span><span class="preset-chip">Cinematic</span><span class="preset-chip">Night shift</span>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-top"><span class="feature-icon" aria-hidden="true">☀</span><span class="tag">LOOK</span></div>
+          <h3>Shadow lift</h3>
+          <p>Brighten caves on your screen only. The game's actual lighting stays untouched.</p>
+          <div class="mini-meter" aria-hidden="true"><span style="width:18%"></span><span style="width:46%"></span><span style="width:82%"></span></div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-top"><span class="feature-icon" aria-hidden="true">▦</span><span class="tag">HUD</span></div>
+          <h3>A real HUD</h3>
+          <p>FPS, frame time, memory, CPS, keystrokes, clock. Enable only what you need — nothing else runs.</p>
+          <div class="hud-preview" aria-hidden="true">
+            <span>FPS 144</span><span>16.7 ms</span><span>MEM 212 MB</span><span>CPS 8</span>
+          </div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-top"><span class="feature-icon" aria-hidden="true">⌕</span><span class="tag">VIEW</span></div>
+          <h3>Zoom &amp; view</h3>
+          <p>F9 zoom, cinematic bars, centre dot. See more, frame better, look good doing it.</p>
+          <div class="key-row compact" aria-hidden="true"><span class="keycap">F9</span><span class="key-label">zoom</span><span class="keycap">F7</span><span class="key-label">HUD</span></div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-top"><span class="feature-icon" aria-hidden="true">▣</span><span class="tag">TOOLS</span></div>
+          <h3>Capture</h3>
+          <p>Screenshot, record, fullscreen. Save the moment without leaving the game.</p>
+          <div class="chip-row" aria-hidden="true"><span class="mini-btn">Screenshot</span><span class="mini-btn">Record</span><span class="mini-btn">Fullscreen</span></div>
+        </article>
+
+        <article class="feature-card">
+          <div class="feature-top"><span class="feature-icon" aria-hidden="true">⌖</span><span class="tag">TOOLS</span></div>
+          <h3>Waypoints</h3>
+          <p>Save coordinates, copy them, convert to the Nether. Never get lost again.</p>
+          <div class="coord-row" aria-hidden="true"><span>X 128</span><span>Y 64</span><span>Z -302</span><span class="coord-nether">N 16 -38</span></div>
+        </article>
+      </div>
+
+      <div class="ethos-banner">
+        <div class="ethos-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="24" height="24" fill="none"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.1 7.5 9.5 4.4-1.4 7.5-4.9 7.5-9.5V6L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="m8.5 12 2.4 2.4 4.6-4.8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h3>Zero cheats. Pure skill. Allegedly.</h3>
+          <p>No x-ray. No auto-click. No unfair advantage. ForestX is presentation and performance — the rest is on you.</p>
+        </div>
+        <a class="btn btn-ghost btn-sm" href="#faq">Read the fine print</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section panel-section" id="panel">
+    <div class="container panel-grid">
+      <div class="panel-copy">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> The control room</div>
+        <h2>Try the panel.<br><span class="muted-h">It's the real thing.</span></h2>
+        <p>This is a live demo of the ForestX overlay. Drag the sliders, flip the toggles, and watch the cave change. The actual client uses the same controls.</p>
+
+        <div class="tab-list">
+          <button type="button" class="tab-item" data-tab-card="look">
+            <span class="tab-num">01</span>
+            <span class="tab-copy"><b>Look</b><span class="tab-desc">Presets, shadow lift, brightness, contrast, saturation, zoom, cinematic bars, centre dot.</span></span>
+          </button>
+          <button type="button" class="tab-item" data-tab-card="hud">
+            <span class="tab-num">02</span>
+            <span class="tab-copy"><b>HUD</b><span class="tab-desc">FPS, frame time, memory, CPS, keystrokes, clock. F7 flips the whole overlay on or off.</span></span>
+          </button>
+          <button type="button" class="tab-item" data-tab-card="tools">
+            <span class="tab-num">03</span>
+            <span class="tab-copy"><b>Tools</b><span class="tab-desc">Screenshot, record, fullscreen, Nether converter, waypoints, reset.</span></span>
+          </button>
+        </div>
+
+        <div class="panel-actions">
+          <a class="btn btn-primary" href="client.html">Launch the real thing <span class="arrow" aria-hidden="true">↗</span></a>
+          <button class="btn btn-ghost" type="button" data-reset-demo="cave">Reset demo</button>
+        </div>
+        <p class="micro-note">The demo saves your settings locally. Nothing leaves your browser.</p>
+      </div>
+
+      <div class="demo-frame demo-frame-lg" data-demo="cave">
+        <div class="demo-topbar">
+          <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="demo-title">forestx — cave preview</div>
+          <div class="demo-live"><span aria-hidden="true"></span> live</div>
+        </div>
+        <div class="demo-stage" data-stage>
+          <div class="scene-mount" data-scene></div>
+          <div class="hud" data-hud aria-hidden="true"></div>
+          <div class="keys" data-keys aria-hidden="true"></div>
+          <div class="cinema cinema-top" data-cinema-top></div>
+          <div class="cinema cinema-bottom" data-cinema-bottom></div>
+          <div class="center-dot" data-dot></div>
+          <div class="hotbar" data-hotbar aria-hidden="true"></div>
+          <button class="panel-fab" type="button" data-open-panel aria-label="Open ForestX panel" aria-expanded="true">
+            <span aria-hidden="true">☰</span> ForestX <kbd>F8</kbd>
+          </button>
+          <aside class="panel" data-panel aria-label="ForestX control panel">
+            <div class="panel-head">
+              <div>
+                <b>ForestX Client</b>
+                <small data-sass>Your caves called. They want light.</small>
+              </div>
+              <button class="panel-close" type="button" data-close-panel aria-label="Close panel">✕</button>
+            </div>
+            <div class="panel-tabs" role="tablist" aria-label="Panel sections">
+              <button type="button" role="tab" data-tab="look" aria-selected="true">Look</button>
+              <button type="button" role="tab" data-tab="hud" aria-selected="false">HUD</button>
+              <button type="button" role="tab" data-tab="tools" aria-selected="false">Tools</button>
+            </div>
+            <div class="panel-body" data-panel-body><p class="hint">Enable JavaScript to try the panel.</p></div>
+            <div class="panel-foot">
+              <span>F8 toggles this panel</span>
+              <button type="button" data-reset>Reset</button>
+            </div>
+          </aside>
+        </div>
+        <div class="demo-footer">
+          <span class="demo-status"><span class="status-dot" aria-hidden="true"></span> <span data-demo-status>overlay ready</span></span>
+          <span class="demo-fps"><span data-fps>60</span> FPS</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="performance">
+    <div class="container">
+      <div class="section-head">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> Built for frames</div>
+        <h2>A lighter overlay.<br><span class="muted-h">A smoother game.</span></h2>
+        <p>ForestX only does work when you switch something on. Leave the HUD off and the overlay costs nothing.</p>
+      </div>
+
+      <div class="perf-card">
+        <div class="perf-head">
+          <div>
+            <h3>Frame time</h3>
+            <p>Illustrative, not a benchmark. Your mileage will vary.</p>
+          </div>
+          <div class="segmented" role="group" aria-label="HUD state">
+            <button type="button" class="seg-btn is-active" data-perf="off">HUD off</button>
+            <button type="button" class="seg-btn" data-perf="on">HUD on</button>
+          </div>
+        </div>
+
+        <div class="perf-chart-wrap">
+          <div class="perf-y" aria-hidden="true"><span>24</span><span>20</span><span>16.7</span><span>12</span></div>
+          <div class="perf-chart" data-perf-chart role="img" aria-label="Frame time chart"></div>
+        </div>
+
+        <div class="perf-stats">
+          <div><b data-perf-avg>16.7</b><span>avg frame time (ms)</span></div>
+          <div><b data-perf-fps>60</b><span>average FPS</span></div>
+          <div><b data-perf-low>60</b><span>1% low FPS</span></div>
+          <div><b data-perf-cost>0.0</b><span>overlay cost (ms)</span></div>
+        </div>
+      </div>
+
+      <div class="perf-notes">
+        <div><span class="note-icon" aria-hidden="true">◐</span><b>Off means off.</b><p>Disabled HUD elements don't run. No hidden timers, no background work.</p></div>
+        <div><span class="note-icon" aria-hidden="true">▦</span><b>Only what you enable.</b><p>Every readout is opt-in. The panel is the only thing that always exists.</p></div>
+        <div><span class="note-icon" aria-hidden="true">✓</span><b>No placebo.</b><p>No fake FPS boosts. Just a clean overlay that doesn't get in the way.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="controls">
+    <div class="container controls-grid">
+      <div class="controls-copy">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> Muscle memory</div>
+        <h2>Three keys.<br><span class="muted-h">That's it.</span></h2>
+        <p>No keybind rabbit hole. The whole overlay lives on the function row, and the panel never steals your inputs.</p>
+        <ul class="control-list">
+          <li><span class="keycap">F8</span><div><b>Panel</b><p>Open or close the ForestX panel. Esc first if you're mid-fight.</p></div></li>
+          <li><span class="keycap">F9</span><div><b>Zoom</b><p>Toggle zoom. Your eyes will thank you.</p></div></li>
+          <li><span class="keycap">F7</span><div><b>HUD</b><p>Flip the whole overlay on or off. Anything you leave off costs nothing.</p></div></li>
+          <li><span class="keycap">Esc</span><div><b>Pause</b><p>Close the panel or pause the game. Even legends pause.</p></div></li>
+        </ul>
+      </div>
+
+      <div class="keyboard-card">
+        <div class="keyboard" aria-hidden="true">
+          <div class="kb-row">
+            <span class="kb-key">Esc</span>
+            <span class="kb-key kb-f">F1</span><span class="kb-key kb-f">F2</span><span class="kb-key kb-f">F3</span><span class="kb-key kb-f">F4</span><span class="kb-key kb-f">F5</span><span class="kb-key kb-f">F6</span>
+            <span class="kb-key kb-f kb-on">F7</span>
+            <span class="kb-key kb-f kb-on">F8</span>
+            <span class="kb-key kb-f kb-on">F9</span>
+            <span class="kb-key kb-f">F10</span><span class="kb-key kb-f">F11</span><span class="kb-key kb-f">F12</span>
+          </div>
+          <div class="kb-row kb-row-2">
+            <span class="kb-key kb-tab">Tab</span><span class="kb-key">Q</span><span class="kb-key">W</span><span class="kb-key">E</span><span class="kb-key">R</span><span class="kb-key">T</span><span class="kb-key">Y</span><span class="kb-key">U</span><span class="kb-key">I</span><span class="kb-key">O</span><span class="kb-key">P</span>
+          </div>
+          <div class="kb-row kb-row-3">
+            <span class="kb-key kb-cap">Caps</span><span class="kb-key">A</span><span class="kb-key">S</span><span class="kb-key">D</span><span class="kb-key">F</span><span class="kb-key">G</span><span class="kb-key">H</span><span class="kb-key">J</span><span class="kb-key">K</span><span class="kb-key">L</span>
+          </div>
+          <div class="kb-row kb-row-4">
+            <span class="kb-key kb-shift">Shift</span><span class="kb-key">Z</span><span class="kb-key">X</span><span class="kb-key">C</span><span class="kb-key">V</span><span class="kb-key">B</span><span class="kb-key">N</span><span class="kb-key">M</span><span class="kb-key kb-shift">Shift</span>
+          </div>
+          <div class="kb-row kb-row-5">
+            <span class="kb-key kb-ctrl">Ctrl</span><span class="kb-key kb-space">space</span><span class="kb-key kb-ctrl">Ctrl</span>
+          </div>
+        </div>
+        <div class="kb-legend">
+          <span><i class="legend-dot"></i> ForestX keys</span>
+          <span><i class="legend-key"></i> Game keys</span>
+        </div>
+        <p class="kb-note">The panel never swallows your inputs. Type in a field and the game keeps running.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="faq">
+    <div class="container faq-grid">
+      <div class="faq-copy">
+        <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> Fine print</div>
+        <h2>Questions,<br><span class="muted-h">answered.</span></h2>
+        <p>Everything you might reasonably ask before launching a browser-based Minecraft client.</p>
+        <a class="text-link" href="https://github.com/forestX-client/forestX-client" target="_blank" rel="noopener">Still curious? Check the repo <span aria-hidden="true">↗</span></a>
+      </div>
+
+      <div class="faq-list">
+        <details class="faq-item" open>
+          <summary>Is ForestX a cheat?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-answer"><p>No. ForestX is a presentation and performance overlay. There's no x-ray, no auto-click, no reach, no unfair advantage. It changes how the game looks on your screen and gives you readouts — the rest is on you.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Does it work on mobile?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-answer"><p>The client is built for desktop. The page itself is responsive, and the client includes a rotate-device prompt for mobile, but a keyboard and mouse are the intended way to play.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>What is Eaglercraft?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-answer"><p>Eaglercraft is a browser-based Minecraft client. ForestX is built on EaglercraftX 26.3 (Wasm-GC) and adds the ForestX overlay: a control panel, a performance HUD, and a small set of quality-of-life tools.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>How do I launch it?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-answer"><p>Hit “Launch client.” The client loads in a new tab — no install, no account, no download. The first launch can take a moment while the engine unpacks; good things unpack slowly.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Does it cost anything?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-answer"><p>No. ForestX is free, single-file, and account-free. There's nothing to buy and nothing to subscribe to.</p></div>
+        </details>
+        <details class="faq-item">
+          <summary>Why “ForestX”?<span class="faq-icon" aria-hidden="true"></span></summary>
+          <div class="faq-answer"><p>Because it's built for the forest, and the X is for the extra. Also, “Minimalist. Packed with function.” was already taken.</p></div>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="final-cta">
+    <div class="container">
+      <div class="cta-card">
+        <div class="cta-glow" aria-hidden="true"></div>
+        <div class="cta-copy">
+          <div class="eyebrow"><span class="pulse" aria-hidden="true"></span> Ready when you are</div>
+          <h2>Your world<br>is waiting.</h2>
+          <p>No install. No account. No nonsense. Just one file and a forest.</p>
+          <div class="hero-cta">
+            <a class="btn btn-primary btn-lg" href="client.html">Launch ForestX <span class="arrow" aria-hidden="true">↗</span></a>
+            <a class="btn btn-ghost" href="#panel">Play with the panel</a>
+          </div>
+          <p class="micro-note">F8 panel · F9 zoom · F7 HUD</p>
+        </div>
+        <div class="cta-art" aria-hidden="true">
+          <svg viewBox="0 0 320 320" width="100%" height="100%" fill="none">
+            <defs>
+              <linearGradient id="ctaSky" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#0e2230"/><stop offset="1" stop-color="#1d3a2a"/>
+              </linearGradient>
+              <linearGradient id="ctaLeaf" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#7bed85"/><stop offset="1" stop-color="#2f9e44"/>
+              </linearGradient>
+            </defs>
+            <rect x="20" y="20" width="280" height="280" rx="24" fill="url(#ctaSky)"/>
+            <circle cx="238" cy="82" r="26" fill="#d9f7c4" opacity=".9"/>
+            <circle cx="238" cy="82" r="40" fill="#d9f7c4" opacity=".12"/>
+            <path d="M20 220 80 150l44 44 36-30 60 56 40-34 40 34v60H20v-60Z" fill="#16301f"/>
+            <path d="M20 244 90 196l50 34 50-22 60 40 50-24v56H20v-36Z" fill="#0f2417"/>
+            <g>
+              <rect x="92" y="150" width="10" height="70" fill="#4a3524"/>
+              <path d="M97 96 62 150h22v34h26v-34h22L97 96Z" fill="url(#ctaLeaf)"/>
+              <rect x="90" y="184" width="14" height="10" fill="#2f9e44" opacity=".7"/>
+            </g>
+            <g opacity=".9">
+              <rect x="196" y="176" width="7" height="48" fill="#4a3524"/>
+              <path d="M199.5 140 176 176h15v24h17v-24h15l-23.5-36Z" fill="#3fbf55"/>
+            </g>
+            <g opacity=".7">
+              <rect x="146" y="192" width="6" height="34" fill="#4a3524"/>
+              <path d="M149 166 132 192h11v18h12v-18h11l-17-26Z" fill="#2f9e44"/>
+            </g>
+            <rect x="20" y="252" width="280" height="48" fill="#0a1a10"/>
+            <g fill="#1d3a2a">
+              <rect x="20" y="252" width="40" height="16"/><rect x="60" y="252" width="40" height="16"/><rect x="100" y="252" width="40" height="16"/><rect x="140" y="252" width="40" height="16"/><rect x="180" y="252" width="40" height="16"/><rect x="220" y="252" width="40" height="16"/><rect x="260" y="252" width="40" height="16"/>
+            </g>
+            <g fill="#5fd068">
+              <rect x="20" y="252" width="40" height="6"/><rect x="60" y="252" width="40" height="6"/><rect x="100" y="252" width="40" height="6"/><rect x="140" y="252" width="40" height="6"/><rect x="180" y="252" width="40" height="6"/><rect x="220" y="252" width="40" height="6"/><rect x="260" y="252" width="40" height="6"/>
+            </g>
+            <g fill="#d9f7c4" opacity=".8">
+              <circle cx="70" cy="120" r="2"/><circle cx="130" cy="90" r="1.5"/><circle cx="180" cy="130" r="2"/><circle cx="250" cy="180" r="1.5"/><circle cx="110" cy="200" r="1.5"/>
+            </g>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container footer-grid">
+    <div class="footer-brand">
+      <a class="brand" href="#top" aria-label="ForestX home">
+        <span class="brand-mark" aria-hidden="true">
+          <svg viewBox="0 0 32 32" width="22" height="22" fill="none"><path d="M16 3 6 13h5v6h10v-6h5L16 3Z" fill="currentColor"/><rect x="13.5" y="21" width="5" height="8" rx="1.5" fill="currentColor" opacity=".55"/></svg>
+        </span>
+        <span class="brand-text">ForestX</span>
+        <span class="brand-badge">CLIENT</span>
+      </a>
+      <p>A minimalist EaglercraftX overlay. Built for the forest, packed with function.</p>
+      <div class="footer-social">
+        <a class="icon-btn" href="https://github.com/forestX-client/forestX-client" target="_blank" rel="noopener" aria-label="GitHub">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor" aria-hidden="true"><path d="M12 .5C5.73.5.5 5.73.5 12a11.5 11.5 0 0 0 7.86 10.92c.58.1.79-.25.79-.55v-2.1c-3.2.7-3.88-1.37-3.88-1.37-.53-1.34-1.29-1.7-1.29-1.7-1.05-.72.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.23-1.28-5.23-5.7 0-1.26.45-2.29 1.19-3.1-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11 11 0 0 1 5.79 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.81 1.18 1.84 1.18 3.1 0 4.43-2.69 5.4-5.25 5.69.41.36.78 1.06.78 2.14v3.17c0 .3.21.66.8.55A11.5 11.5 0 0 0 23.5 12C23.5 5.73 18.27.5 12 .5Z"/></svg>
+        </a>
+      </div>
+    </div>
+    <nav class="footer-nav" aria-label="Footer navigation">
+      <div><b>Explore</b><a href="#features">Features</a><a href="#panel">Panel</a><a href="#performance">Performance</a><a href="#controls">Controls</a></div>
+      <div><b>Client</b><a href="client.html">Launch</a><a href="#faq">FAQ</a><a href="https://github.com/forestX-client/forestX-client" target="_blank" rel="noopener">GitHub</a></div>
+      <div><b>Keys</b><span><kbd>F8</kbd> panel</span><span><kbd>F9</kbd> zoom</span><span><kbd>F7</kbd> HUD</span></div>
+    </nav>
+  </div>
+  <div class="container footer-bottom">
+    <span>© 2026 ForestX. Built for the community.</span>
+    <span class="footer-disclaimer">Not affiliated with Mojang, Microsoft, or Eaglercraft. No cheats, just frames.</span>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

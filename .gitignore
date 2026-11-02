@@ -1,0 +1,7 @@
+# assembled client (generated from client/parts)
+client/forestx.html
+
+# dependencies / local artifacts
+node_modules/
+*.log
+.DS_Store

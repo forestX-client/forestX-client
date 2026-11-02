@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Launching ForestX Client…</title>
+<meta name="description" content="Launch the ForestX EaglercraftX client.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#070b08">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230b120e'/%3E%3Cpath d='M32 12 18 26h8v10h12V26h8L32 12Z' fill='%235fd068'/%3E%3Crect x='28' y='38' width='8' height='14' rx='2' fill='%232f9e44'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/launcher.css">
+</head>
+<body>
+<div class="bg-fx" aria-hidden="true">
+  <div class="bg-grid"></div>
+  <div class="bg-glow bg-glow-a"></div>
+  <div class="bg-glow bg-glow-b"></div>
+</div>
+
+<main class="launcher">
+  <div class="launcher-card">
+    <div class="launcher-brand">
+      <span class="brand-mark" aria-hidden="true">
+        <svg viewBox="0 0 32 32" width="24" height="24" fill="none">
+          <path d="M16 3 6 13h5v6h10v-6h5L16 3Z" fill="currentColor"/>
+          <rect x="13.5" y="21" width="5" height="8" rx="1.5" fill="currentColor" opacity=".55"/>
+        </svg>
+      </span>
+      <div class="brand-copy"><b>ForestX</b><span>CLIENT</span></div>
+      <span class="launcher-version">26.3</span>
+    </div>
+
+    <div class="launcher-eyebrow"><span class="pulse" aria-hidden="true"></span> EaglercraftX <span class="sep">·</span> Wasm-GC</div>
+    <h1 id="launcher-title">Preparing your world.</h1>
+    <p class="launcher-status" id="launcher-status" role="status" aria-live="polite">Checking for client parts…</p>
+
+    <div class="launcher-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-launcher-bar-wrap>
+      <span data-launcher-bar></span>
+    </div>
+    <div class="launcher-meta">
+      <span data-launcher-meta>0 / 4 parts</span>
+      <span data-launcher-size>0 B</span>
+    </div>
+
+    <ul class="part-list" data-part-list aria-label="Client parts">
+      <li data-part="forestx3.html" data-state="waiting"><span class="part-icon" aria-hidden="true"></span><span class="part-name">forestx3.html</span><span class="part-status">waiting</span></li>
+      <li data-part="forestx4.html" data-state="waiting"><span class="part-icon" aria-hidden="true"></span><span class="part-name">forestx4.html</span><span class="part-status">waiting</span></li>
+      <li data-part="forestx2.html" data-state="waiting"><span class="part-icon" aria-hidden="true"></span><span class="part-name">forestx2.html</span><span class="part-status">waiting</span></li>
+      <li data-part="forestx1.html" data-state="waiting"><span class="part-icon" aria-hidden="true"></span><span class="part-name">forestx1.html</span><span class="part-status">waiting</span></li>
+    </ul>
+
+    <div class="launcher-note">
+      <p>The client is assembled locally in your browser from 4 parts. Nothing is uploaded.</p>
+      <p class="launcher-keys"><kbd>F8</kbd> panel <kbd>F9</kbd> zoom <kbd>F7</kbd> HUD</p>
+    </div>
+
+    <div class="launcher-actions">
+      <a class="btn btn-ghost" href="./">← Back to landing</a>
+      <button class="btn btn-primary" type="button" data-retry hidden>Retry</button>
+      <a class="btn btn-primary" data-launch hidden>Open ForestX ↗</a>
+    </div>
+
+    <p class="launcher-fine">No install. No account. No nonsense.</p>
+  </div>
+</main>
+
+<script src="assets/launcher.js"></script>
+</body>
+</html>
