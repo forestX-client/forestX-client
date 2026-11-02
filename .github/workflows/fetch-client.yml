@@ -38,6 +38,12 @@ jobs:
           grep -q 'id="game_frame"' forestx.html || { echo "::error::game_frame missing after patch"; exit 1; }
           ls -lh forestx.html
 
+      - name: Patch the game's own title-screen assets (Uno/Dos/Settings)
+        run: |
+          python3 -m pip install --break-system-packages --quiet Pillow
+          python3 tools/patch_assets.py forestx.html forestx.html
+          ls -lh forestx.html
+
       - name: Commit client if changed
         run: |
           git config user.name "github-actions[bot]"
