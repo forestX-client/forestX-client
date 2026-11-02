@@ -87,18 +87,18 @@
         </pattern>
       </defs>
       <rect width="800" height="520" fill="url(#fxSky)"/>
-      <circle cx="430" cy="92" r="86" fill="url(#fxMoon)"/>
-      <circle cx="430" cy="92" r="27" fill="#d9f7c4"/>
-      <circle cx="421" cy="84" r="5" fill="#c3e6ad" opacity=".6"/>
-      <circle cx="440" cy="101" r="3" fill="#c3e6ad" opacity=".5"/>
+      <circle cx="300" cy="92" r="86" fill="url(#fxMoon)"/>
+      <circle cx="300" cy="92" r="27" fill="#d9f7c4"/>
+      <circle cx="291" cy="84" r="5" fill="#c3e6ad" opacity=".6"/>
+      <circle cx="310" cy="101" r="3" fill="#c3e6ad" opacity=".5"/>
       <g fill="#d9f7c4" opacity=".65">
         <circle cx="80" cy="52" r="1.6"/><circle cx="150" cy="88" r="1.1"/><circle cx="230" cy="44" r="1.4"/>
         <circle cx="310" cy="76" r="1"/><circle cx="390" cy="38" r="1.5"/><circle cx="470" cy="92" r="1.1"/>
-        <circle cx="300" cy="48" r="1.3"/><circle cx="380" cy="60" r="1.2"/><circle cx="460" cy="130" r="1"/>
+        <circle cx="140" cy="48" r="1.3"/><circle cx="200" cy="60" r="1.2"/><circle cx="260" cy="130" r="1"/>
       </g>
       <g fill="#9fc4b0" opacity=".1">
         <rect x="70" y="86" width="130" height="13" rx="6"/><rect x="104" y="72" width="78" height="13" rx="6"/>
-        <rect x="250" y="120" width="150" height="12" rx="6"/><rect x="290" y="106" width="86" height="12" rx="6"/>
+        <rect x="140" y="120" width="150" height="12" rx="6"/><rect x="180" y="106" width="86" height="12" rx="6"/>
         <rect x="120" y="150" width="100" height="10" rx="5"/>
       </g>
       <path d="M0 332 120 218 220 302 320 198 440 332Z" fill="#12281f"/>
@@ -107,16 +107,16 @@
       <path d="M420 238 520 310 620 228 800 332" fill="none" stroke="#1d3a2a" stroke-width="2" opacity=".6"/>
       <g opacity=".55">
         ${tree(40, 334, .55, true)}${tree(105, 330, .45, true)}${tree(175, 334, .5, true)}
-        ${tree(300, 334, .5, true)}${tree(350, 330, .42, true)}${tree(450, 336, .55, true)}
+        ${tree(220, 334, .5, true)}${tree(260, 330, .42, true)}${tree(300, 336, .55, true)}
       </g>
       <rect y="332" width="800" height="188" fill="url(#fxGrass)"/>
-      <path d="M300 372 Q390 352 490 374 T560 392 L560 470 L300 470Z" fill="url(#fxWater)"/>
-      <path d="M340 398 Q410 386 480 400" stroke="#7bd6d6" stroke-width="2" fill="none" opacity=".35"/>
-      <path d="M370 424 Q430 414 500 426" stroke="#7bd6d6" stroke-width="1.5" fill="none" opacity=".22"/>
+      <path d="M200 372 Q290 352 390 374 T460 392 L460 470 L200 470Z" fill="url(#fxWater)"/>
+      <path d="M240 398 Q310 386 380 400" stroke="#7bd6d6" stroke-width="2" fill="none" opacity=".35"/>
+      <path d="M270 424 Q330 414 400 426" stroke="#7bd6d6" stroke-width="1.5" fill="none" opacity=".22"/>
       <g opacity=".9">
-        ${tree(92, 340, 1.15, false)}${tree(196, 348, .82, false)}${tree(450, 344, 1.02, false)}${tree(480, 352, .72, false)}
+        ${tree(92, 340, 1.15, false)}${tree(196, 348, .82, false)}${tree(300, 344, 1.02, false)}${tree(330, 352, .72, false)}
       </g>
-      <g transform="translate(340 340)">
+      <g transform="translate(280 340)">
         <rect x="-9" y="-32" width="18" height="20" fill="#3f9e44"/>
         <rect x="-9" y="-32" width="18" height="4" fill="#5fd068"/>
         <rect x="-9" y="-12" width="8" height="12" fill="#2a4a6e"/>
@@ -129,11 +129,11 @@
         <rect x="12" y="-50" width="5" height="10" fill="#c9d4d8" transform="rotate(18 14 -45)"/>
       </g>
       <g fill="#d9f7c4">
-        <circle class="firefly" cx="250" cy="300" r="2"/>
-        <circle class="firefly" cx="300" cy="270" r="1.5"/>
-        <circle class="firefly" cx="380" cy="310" r="1.8"/>
-        <circle class="firefly" cx="430" cy="290" r="1.4"/>
-        <circle class="firefly" cx="200" cy="250" r="1.2"/>
+        <circle class="firefly" cx="150" cy="300" r="2"/>
+        <circle class="firefly" cx="200" cy="270" r="1.5"/>
+        <circle class="firefly" cx="250" cy="310" r="1.8"/>
+        <circle class="firefly" cx="300" cy="290" r="1.4"/>
+        <circle class="firefly" cx="350" cy="250" r="1.2"/>
       </g>
       <rect y="332" width="800" height="188" fill="url(#fxGrass)" opacity=".18"/>
     </svg>`;
