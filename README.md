@@ -7,13 +7,16 @@ download the single self-contained file and run it anywhere — even offline.
 
 | | |
 |---|---|
-| ▶ **Play** | [`play.html`](play.html) — embeds the live client |
+| ▶ **Play** | https://v0-forestx.vercel.app/play |
 | ↓ **Download client** | https://v0-forestx.vercel.app/forestx.html (~86 MB, one file) |
-| 🌐 **Live client** | https://v0-forestx.vercel.app/play |
+
+The Play and Download buttons link directly to the live client — no iframes,
+no wrapper pages. Links are same-tab on purpose: `target="_blank"` gets
+swallowed by popup blockers and embedded previews, which made Play look broken.
 
 ## Run the landing page
 
-No build step, no JavaScript dependencies — plain static files:
+No build step, no JavaScript — plain static files:
 
 ```bash
 python3 -m http.server 8000
@@ -25,19 +28,16 @@ Deploy anywhere static: GitHub Pages (Settings → Pages → deploy from branch,
 ## Files
 
 ```
-index.html          Landing page — one Play button, one Download button
-play.html           Fullscreen embed of the live client (v0-forestx.vercel.app/play)
-styles.css          All styling for both pages
+index.html          The whole landing page (one Play button, one Download button)
+styles.css          All styling
 assets/
   hero-world.jpg    Voxel forest artwork
   favicon.svg       Grass-block favicon
 ```
 
-The Play button links **same-tab** to `play.html` on purpose: `target="_blank"`
-links to the client get swallowed by popup blockers and embedded previews,
-making Play look broken. An internal page can't be blocked that way, and
-`play.html` includes a direct-open/download fallback if a browser or network
-blocks the embed.
+> Want the client self-hosted from this repo instead of linking to Vercel?
+> Drop `forestx.html` in the root and point the two links in `index.html`
+> at `./forestx.html` / a local play route.
 
 ## Disclaimer
 

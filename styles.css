@@ -106,6 +106,3 @@ kbd{font-weight:700;font-size:.78em;background:#20242a;color:#fff;border:1px sol
 .footer nav a{color:var(--muted);text-decoration:none;font-weight:600}
 .footer nav a:hover{color:var(--green)}
 .footer-legal{border-top:1px dashed var(--line-soft);padding-top:1.4rem;color:var(--faint);font-size:.84rem}
-
-/* Play page (play.html) carries its own inline CSS so the game
-   always covers the full screen. */
