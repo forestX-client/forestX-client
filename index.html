@@ -1,0 +1,916 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>ForestX Client — the Eaglercraft client I actually want to play</title>
+<meta name="description" content="I make Eaglercraft clients. ForestX is the best one I've built so far — vivid post-processing, 12 handmade filters, forest panorama, and EaglercraftX 1.8 Wasm-GC under the hood." />
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath fill='%231a2e1e' d='M16 2 L6 12 L9 12 L6 20 L12 20 L8 30 L24 30 L20 20 L26 20 L23 12 L26 12 Z'/%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,ital,soft,wght@9..144,0,0,900;9..144,1,0,900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;600&family=Patrick+Hand&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#f6f1e7;
+    --paper2:#efe8d8;
+    --ink:#111712;
+    --forest:#1a2e1e;
+    --moss:#2f4f2a;
+    --sage:#8fb88e;
+    --mustard:#e8b44a;
+    --brick:#c45a3c;
+    --sky:#3c86dc;
+    --line:#1a2e1e;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;background:var(--paper);color:var(--ink)}
+  body{
+    font-family: "Instrument Serif", Georgia, serif;
+    line-height:1.35;
+    overflow-x:hidden;
+  }
+  /* grain */
+  body::before{
+    content:"";
+    position:fixed;inset:0;
+    pointer-events:none;opacity:.55;
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.06'/%3E%3C/svg%3E"),
+      radial-gradient(900px 600px at 80% -10%, rgba(60,134,220,.08), transparent 60%),
+      radial-gradient(700px 500px at -10% 30%, rgba(47,79,42,.07), transparent 60%);
+    mix-blend-mode:multiply;
+  }
+  a{color:inherit}
+  .wrap{width:min(1180px,92vw);margin:0 auto;position:relative}
+
+  /* top bar - looks like a stamped label */
+  .topline{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:16px;
+    padding:14px 0 10px;
+    border-bottom:2px solid var(--line);
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px;letter-spacing:.12em;text-transform:uppercase;
+  }
+  .topline b{font-weight:600}
+  .topline .dot{width:7px;height:7px;background:var(--brick);border-radius:50%;display:inline-block;margin-right:8px;vertical-align:1px}
+  .topline a{ text-decoration:none;border-bottom:1px solid currentColor; padding-bottom:1px}
+  .topline a:hover{ background:var(--mustard)}
+
+  /* hero */
+  .hero{
+    display:grid;
+    grid-template-columns: 1.05fr .95fr;
+    gap:28px;
+    padding:34px 0 18px;
+    align-items:stretch;
+  }
+  @media (max-width: 900px){ .hero{grid-template-columns:1fr} }
+
+  .hero-left{
+    position:relative;
+    padding:10px 0 6px;
+  }
+  .kicker{
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+    display:inline-flex;align-items:center;gap:10px;
+    border:1.5px solid var(--line);
+    padding:7px 10px 6px;
+    background:var(--paper2);
+    transform:rotate(-0.7deg);
+    box-shadow: 4px 4px 0 var(--line);
+  }
+  .kicker span{opacity:.7}
+  .kicker strong{font-weight:600}
+  .wordmark{
+    margin:18px 0 8px;
+    line-height:.9;
+    position:relative;
+  }
+  .wordmark .small{
+    font-family:"JetBrains Mono", monospace;
+    font-size:13px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--moss);
+    display:block;margin-bottom:6px;
+  }
+  .wordmark h1{
+    font-family:"Fraunces", serif;
+    font-size: clamp(46px, 8vw, 84px);
+    font-weight:900;
+    letter-spacing:-.03em;
+    margin:0;
+    line-height:.85;
+  }
+  .wordmark h1 i{
+    font-family:"Instrument Serif", serif;
+    font-weight:400;
+    font-style:italic;
+    color:var(--brick);
+    letter-spacing:-.02em;
+  }
+  .wordmark .scribble{
+    position:absolute;
+    left: -6px; top: 54%;
+    width: 320px; height: 18px;
+    background: var(--mustard);
+    opacity:.35;
+    z-index:-1;
+    transform: rotate(-1.2deg);
+  }
+  @media (max-width:900px){ .wordmark .scribble{width:66vw} }
+  .lede{
+    font-size:20px;
+    max-width:52ch;
+    margin:16px 0 0;
+    color:#222;
+  }
+  .lede em{
+    font-family:"Patrick Hand", cursive;
+    font-style:normal;
+    background: linear-gradient(transparent 60%, rgba(232,180,74,.45) 0);
+    padding:0 4px;
+  }
+  .lede strong{ font-weight:900; text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset:4px; text-decoration-color: var(--sage) }
+
+  /* fact list - like field notes */
+  .field-notes{
+    margin:18px 0 0;
+    display:flex;flex-wrap:wrap;gap:10px;
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px;letter-spacing:.06em;
+  }
+  .field-notes span{
+    border:1px solid var(--line);
+    padding:6px 9px;
+    background: white;
+    transform: rotate(-0.4deg);
+  }
+  .field-notes span:nth-child(2){ transform: rotate(0.5deg); background: var(--paper2)}
+  .field-notes span:nth-child(3){ transform: rotate(-0.3deg)}
+
+  .cta-row{
+    display:flex;flex-wrap:wrap;align-items:center;gap:14px;
+    margin:22px 0 6px;
+  }
+  .btn-launch{
+    appearance:none;
+    border:2px solid var(--line);
+    background: var(--forest);
+    color: var(--paper);
+    font-family: "Fraunces", serif;
+    font-weight:900;
+    font-size:18px;
+    letter-spacing:-.01em;
+    padding:14px 18px 13px;
+    display:inline-flex;align-items:center;gap:12px;
+    cursor:pointer;
+    box-shadow: 6px 6px 0 var(--line);
+    transform: rotate(-0.6deg);
+    transition: transform .12s, box-shadow .12s, background .12s;
+    text-decoration:none;
+  }
+  .btn-launch:hover{ transform: rotate(0deg) translate(-1px,-1px); box-shadow: 7px 7px 0 var(--line); background:#0f2212 }
+  .btn-launch:active{ transform: rotate(0deg) translate(2px,2px); box-shadow: 3px 3px 0 var(--line)}
+  .btn-launch .arrow{
+    width:34px;height:34px;
+    border:1.5px solid var(--paper);
+    display:grid;place-items:center;
+    font-family:"JetBrains Mono", monospace;
+    font-size:14px;
+    line-height:1;
+    background: var(--mustard);
+    color: var(--forest);
+  }
+  .btn-sub{
+    font-family:"Patrick Hand", cursive;
+    font-size:16px;
+    color:#3a4a3a;
+    max-width:24ch;
+    line-height:1.25;
+    transform: rotate(0.6deg);
+  }
+  .btn-sub b{ color: var(--forest); font-family:"JetBrains Mono", monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; background: var(--paper2); border:1px solid var(--line); padding:2px 6px; }
+
+  /* hero right - preview */
+  .preview-wrap{
+    position:relative;
+    padding:10px 14px 14px 0;
+  }
+  .tape{
+    position:absolute;
+    top:-2px; left:18%;
+    width:140px;height:28px;
+    background: rgba(232,180,74,.9);
+    border:1px solid rgba(0,0,0,.15);
+    transform: rotate(-7deg);
+    box-shadow: 0 2px 6px rgba(0,0,0,.15);
+    z-index:3;
+  }
+  .tape::after{
+    content:""; position:absolute; inset:0;
+    background: repeating-linear-gradient(90deg, transparent 0 14px, rgba(0,0,0,.04) 14px 15px);
+  }
+  .tape2{
+    left:auto; right:6%; top: 12px;
+    width:110px; transform: rotate(8deg);
+    background: rgba(255,255,255,.75);
+  }
+  .browser{
+    background: white;
+    border:2px solid var(--line);
+    box-shadow: 8px 8px 0 var(--line);
+    overflow:hidden;
+    transform: rotate(0.7deg);
+    position:relative;
+  }
+  .browser-bar{
+    height:32px;
+    border-bottom:2px solid var(--line);
+    display:flex;align-items:center;gap:8px;
+    padding:0 10px;
+    background: var(--paper2);
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px;letter-spacing:.08em;
+  }
+  .browser-bar .dots{display:flex;gap:6px}
+  .browser-bar .dots i{width:10px;height:10px;border:1px solid var(--line);border-radius:50%;display:block}
+  .browser-bar .dots i:nth-child(1){background:var(--brick)}
+  .browser-bar .dots i:nth-child(2){background:var(--mustard)}
+  .browser-bar .dots i:nth-child(3){background:var(--sage)}
+  .browser-screen{
+    aspect-ratio: 16/10;
+    background:#3c86dc;
+    position:relative;
+    overflow:hidden;
+    display:grid;place-items:center;
+  }
+  .browser-screen::before{
+    content:"";
+    position:absolute;inset:0;
+    background:
+      radial-gradient(600px 400px at 50% 10%, rgba(255,255,255,.18), transparent 60%),
+      radial-gradient(500px 300px at 20% 80%, rgba(26,46,30,.18), transparent 60%);
+  }
+  /* faux forest panorama strip */
+  .pano{
+    position:absolute;inset:0;
+    display:grid;grid-template-columns:repeat(6,1fr);
+    gap:2px;
+    padding:14px;
+    opacity:.95;
+  }
+  .pano div{
+    border:1px solid rgba(255,255,255,.45);
+    background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(0,0,0,.15));
+    position:relative;overflow:hidden;
+  }
+  .pano div::after{
+    content:"";
+    position:absolute;inset:0;
+    background: linear-gradient(180deg, transparent 40%, rgba(26,46,30,.55));
+  }
+  .pano div:nth-child(1){ background:#7bb369 }
+  .pano div:nth-child(2){ background:#a8c686 }
+  .pano div:nth-child(3){ background:#6a8f4a }
+  .pano div:nth-child(4){ background:#b7d39a }
+  .pano div:nth-child(5){ background:#4f6b2a }
+  .pano div:nth-child(6){ background:#8aa26b }
+
+  .loading-card{
+    position:relative;
+    background:white;
+    border:2px solid var(--line);
+    width:min(360px, 82%);
+    padding:16px 14px 13px;
+    box-shadow: 6px 6px 0 rgba(17,23,18,.18);
+    transform: rotate(-0.5deg);
+    z-index:2;
+  }
+  .loading-card .eyebrow{
+    font-family:"JetBrains Mono", monospace;
+    font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+    color:var(--moss);
+    display:flex;justify-content:space-between;align-items:center;
+  }
+  .loading-card h3{
+    font-family:"Fraunces", serif;
+    font-size:22px; margin:6px 0 4px; line-height:1;
+    letter-spacing:-.02em;
+  }
+  .loading-card h3 i{ font-family:"Instrument Serif", serif; font-weight:400; font-style:italic; color:var(--brick)}
+  .loading-card p{
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px; line-height:1.5; color:#333;
+    margin:8px 0 0;
+    border-top:1px dashed var(--line);
+    padding-top:8px;
+  }
+  .progress{
+    height:8px;border:1px solid var(--line); background:var(--paper2); margin-top:10px; position:relative; overflow:hidden;
+  }
+  .progress i{
+    position:absolute; left:0; top:0; bottom:0; width:68%;
+    background: var(--forest);
+    background-image: repeating-linear-gradient(90deg, transparent 0 6px, rgba(255,255,255,.18) 6px 7px);
+  }
+  .screen-foot{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 10px;
+    font-family:"JetBrains Mono", monospace;
+    font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+    background: white;
+    border-top:2px solid var(--line);
+  }
+  .hand-note{
+    position:absolute;
+    right:-10px; bottom:-14px;
+    background: var(--mustard);
+    border:1.5px solid var(--line);
+    padding:8px 10px;
+    font-family:"Patrick Hand", cursive;
+    font-size:14px; line-height:1.1;
+    transform: rotate(1.8deg);
+    box-shadow: 3px 3px 0 var(--line);
+    z-index:4;
+  }
+  .hand-note b{ font-family:"JetBrains Mono", monospace; font-size:10px; letter-spacing:.08em; text-transform:uppercase; display:block; margin-bottom:2px}
+
+  /* marquee */
+  .marquee{
+    border-top:2px solid var(--line);
+    border-bottom:2px solid var(--line);
+    background: var(--forest);
+    color: var(--paper);
+    overflow:hidden;
+    white-space:nowrap;
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px; letter-spacing:.12em; text-transform:uppercase;
+    padding:9px 0;
+    transform: rotate(-0.4deg);
+    margin:10px 0 0;
+  }
+  .marquee span{ display:inline-block; padding-right:36px; animation: scroll 22s linear infinite}
+  @keyframes scroll{ from{transform:translateX(0)} to{transform:translateX(-50%)} }
+
+  /* features */
+  .section{
+    padding:32px 0 10px;
+  }
+  .section-head{
+    display:flex;align-items:end;justify-content:space-between;gap:18px;
+    border-bottom:2px solid var(--line);
+    padding-bottom:14px;
+    margin-bottom:18px;
+    flex-wrap:wrap;
+  }
+  .section-head h2{
+    font-family:"Fraunces", serif;
+    font-size:34px; line-height:.9; margin:0;
+    letter-spacing:-.02em;
+  }
+  .section-head h2 i{ font-family:"Instrument Serif", serif; font-style:italic; font-weight:400; color:var(--brick)}
+  .section-head p{
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px; line-height:1.5;
+    max-width:42ch;
+    margin:0;
+    opacity:.8;
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(12, 1fr);
+    gap:16px;
+  }
+  .card{
+    background:white;
+    border:1.8px solid var(--line);
+    padding:16px 15px 14px;
+    box-shadow: 6px 6px 0 var(--line);
+    position:relative;
+  }
+  .card h3{
+    font-family:"Fraunces", serif;
+    font-size:19px; margin:0 0 6px; letter-spacing:-.02em; line-height:1;
+  }
+  .card h3 em{ font-family:"Instrument Serif", serif; font-style:italic; font-weight:400 }
+  .card p{
+    font-family:"Instrument Serif", serif;
+    font-size:15px; line-height:1.45; margin:6px 0 0; color:#2a2f2a;
+  }
+  .card .meta{
+    font-family:"JetBrains Mono", monospace;
+    font-size:10px; letter-spacing:.1em; text-transform:uppercase;
+    color:var(--moss);
+    border-bottom:1px dashed var(--line);
+    padding-bottom:8px; margin-bottom:10px;
+    display:flex;justify-content:space-between;gap:8px;
+  }
+  .tag{
+    font-family:"JetBrains Mono", monospace;
+    font-size:10px; letter-spacing:.08em; text-transform:uppercase;
+    border:1px solid var(--line);
+    padding:3px 7px;
+    background: var(--paper2);
+    display:inline-block;
+  }
+  .chips{ display:flex;flex-wrap:wrap;gap:7px; margin-top:10px}
+  .chips span{
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px; letter-spacing:.04em;
+    border:1px solid var(--line);
+    padding:5px 8px;
+    background: #fdfbf5;
+  }
+  .chips span.on{ background: var(--forest); color:var(--paper); border-color:var(--forest)}
+
+  /* specific placements - deliberately uneven */
+  .c1{ grid-column: span 5; transform: rotate(-0.4deg)}
+  .c2{ grid-column: span 7; transform: rotate(0.5deg); background: var(--paper2)}
+  .c3{ grid-column: span 7; transform: rotate(-0.3deg)}
+  .c4{ grid-column: span 5; transform: rotate(0.6deg); background:#fdfbf5}
+  .c5{ grid-column: span 12; transform: rotate(-0.2deg)}
+  @media (max-width:900px){
+    .c1,.c2,.c3,.c4,.c5{ grid-column: span 12; transform:none}
+  }
+
+  /* preset wall */
+  .preset-wall{
+    display:grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap:10px;
+    margin-top:12px;
+  }
+  @media (max-width:900px){ .preset-wall{grid-template-columns: repeat(2, 1fr)} }
+  @media (max-width:520px){ .preset-wall{grid-template-columns:1fr} }
+  .preset{
+    border:1.5px solid var(--line);
+    background:white;
+    padding:10px 10px 9px;
+    position:relative;
+    overflow:hidden;
+    min-height:94px;
+  }
+  .preset::before{
+    content:""; position:absolute; inset:0;
+    opacity:.18; pointer-events:none;
+  }
+  .preset h4{ margin:0; font-family:"Fraunces", serif; font-size:15px; line-height:1; position:relative}
+  .preset p{ margin:4px 0 0; font-family:"JetBrains Mono", monospace; font-size:10px; line-height:1.4; opacity:.8; position:relative}
+  .preset .swatch{
+    position:absolute; right:8px; top:8px;
+    width:22px;height:22px; border:1.5px solid var(--line);
+    border-radius:50%;
+  }
+  /* assign swatch colors */
+  .p-clean{ background:#f6f1e7} .p-clean::before{background: repeating-linear-gradient(45deg, transparent 0 4px, rgba(0,0,0,.06) 4px 5px)}
+  .p-warm{ background:#e8b44a} .p-warm::before{ background: radial-gradient(circle at 30% 30%, white, transparent 60%)}
+  .p-vivid{ background:#7bb369}
+  .p-noir{ background:#111712; color:#f6f1e7}
+  .p-crt{ background:#3c86dc}
+  .p-night{ background:#0f2a1a; color:#c8f0b0}
+  .p-dream{ background:#d9ccff}
+  .p-mini{ background:#fde8c8}
+  .p-pixel{ background:#c45a3c; color:white}
+  .p-sepia{ background:#b8956a}
+  .p-thermal{ background:#ff6b35}
+  .p-mirror{ background:#8fb88e}
+
+  .preset p, .preset h4{ mix-blend-mode: normal }
+
+  /* specs */
+  .specs{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:16px;
+    margin-top:14px;
+    font-family:"JetBrains Mono", monospace;
+    font-size:12px; line-height:1.6;
+  }
+  @media (max-width:700px){ .specs{grid-template-columns:1fr} }
+  .specs div{
+    border:1.5px solid var(--line);
+    background:white;
+    padding:12px 13px;
+    box-shadow: 4px 4px 0 var(--line);
+  }
+  .specs h4{
+    margin:0 0 8px;
+    font-size:11px; letter-spacing:.12em; text-transform:uppercase;
+    border-bottom:1px solid var(--line); padding-bottom:6px;
+  }
+  .specs code{
+    background: var(--paper2);
+    border:1px solid var(--line);
+    padding:1px 5px;
+    font-size:11px;
+  }
+
+  /* quote */
+  .quote{
+    margin:22px 0 6px;
+    border:2px solid var(--line);
+    background: var(--forest);
+    color: var(--paper);
+    padding:18px 18px 16px;
+    transform: rotate(-0.3deg);
+    box-shadow: 6px 6px 0 var(--line);
+    display:grid;
+    grid-template-columns: 1.1fr .9fr;
+    gap:18px;
+    align-items:center;
+  }
+  @media (max-width:800px){ .quote{grid-template-columns:1fr} }
+  .quote blockquote{
+    margin:0;
+    font-family:"Fraunces", serif;
+    font-size:24px; line-height:1.1; letter-spacing:-.02em;
+  }
+  .quote blockquote i{ font-family:"Instrument Serif", serif; font-style:italic; font-weight:400; color:var(--mustard)}
+  .quote cite{
+    display:block; margin-top:10px;
+    font-family:"JetBrains Mono", monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; opacity:.85; font-style:normal;
+  }
+  .quote .side{
+    font-family:"Patrick Hand", cursive;
+    font-size:15px; line-height:1.35;
+    background: var(--paper);
+    color: var(--ink);
+    border:1.5px solid var(--line);
+    padding:12px 13px;
+    transform: rotate(1deg);
+  }
+
+  /* how to play */
+  .how{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap:16px;
+    margin-top:14px;
+  }
+  @media (max-width:800px){ .how{grid-template-columns:1fr} }
+  .how div{
+    border:1.5px solid var(--line);
+    background:white;
+    padding:14px 13px 12px;
+    position:relative;
+  }
+  .how div::before{
+    content: attr(data-n);
+    position:absolute; top:-10px; left:10px;
+    background: var(--mustard);
+    border:1.5px solid var(--line);
+    font-family:"JetBrains Mono", monospace;
+    font-size:10px; letter-spacing:.08em; padding:2px 7px;
+  }
+  .how h4{ margin:6px 0 6px; font-family:"Fraunces", serif; font-size:16px; line-height:1}
+  .how p{ margin:0; font-family:"Instrument Serif", serif; font-size:14px; line-height:1.45; color:#2a2f2a}
+  .how code{ font-family:"JetBrains Mono", monospace; font-size:11px; background:var(--paper2); border:1px solid var(--line); padding:1px 5px}
+
+  /* footer */
+  footer{
+    margin-top:28px;
+    border-top:2px solid var(--line);
+    padding:18px 0 26px;
+    display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;align-items:center;
+    font-family:"JetBrains Mono", monospace;
+    font-size:11px; letter-spacing:.06em;
+  }
+  footer .sig{
+    font-family:"Patrick Hand", cursive;
+    font-size:16px; letter-spacing:0;
+    transform: rotate(-0.6deg);
+  }
+  .footer-links{ display:flex; gap:10px; flex-wrap:wrap}
+  .footer-links a{
+    border:1.5px solid var(--line);
+    padding:7px 10px;
+    background:white;
+    text-decoration:none;
+    box-shadow: 3px 3px 0 var(--line);
+  }
+  .footer-links a:hover{ background:var(--paper2)}
+
+  /* tiny helpers */
+  .scribble-underline{
+    text-decoration: underline;
+    text-decoration-color: var(--mustard);
+    text-decoration-style: wavy;
+    text-underline-offset:4px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <nav class="topline">
+    <div><span class="dot"></span> <b>forestX-client</b> <span style="opacity:.6">— EaglercraftX 1.8 · Wasm-GC</span></div>
+    <div>v29 • <a href="https://github.com/forestX-client/forestX-client" target="_blank" rel="noopener">github</a> • <a href="#presets">filters</a> • <a href="#launch">play</a></div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-left">
+      <div class="kicker"><strong>I MAKE EAGLERCRAFT CLIENTS</strong> <span>— hand-built, not generated</span></div>
+
+      <div class="wordmark">
+        <span class="small">single-file · offline-ready · keeps your world saves</span>
+        <div class="scribble"></div>
+        <h1>ForestX <i>client</i></h1>
+      </div>
+
+      <p class="lede">
+        I build Eaglercraft clients for fun and this is <strong>the best one I've made so far.</strong>
+        It started as a forest panorama that felt like morning light through trees — <em>dapple, vignette, bloom, and all the tiny post knobs you can tweak while you play.</em>
+        No rebuilds, no reload spam. Just play.
+      </p>
+
+      <div class="field-notes">
+        <span>◐ 1.8.8 vanilla</span>
+        <span>⟡ Wasm-GC + Brotli streaming</span>
+        <span>☼ vivid is default — sonnet off</span>
+      </div>
+
+      <div class="cta-row" id="launch">
+        <a class="btn-launch" href="./forestx.html" id="launchBtn">
+          <span class="arrow">▶</span>
+          Launch ForestX
+        </a>
+        <div class="btn-sub">
+          works offline after first load.<br>
+          <b id="bundleState">checking bundle…</b> your saves stay in this browser.
+        </div>
+      </div>
+
+      <div style="margin-top:14px; font-family:'Patrick Hand',cursive; font-size:14px; color:#3b4a36; transform:rotate(-0.4deg)">
+        tip: press <span style="font-family:'JetBrains Mono',monospace; font-size:11px; border:1px solid var(--line); padding:2px 6px; background:white">M</span> for tools — all the sliders live there. <span style="opacity:.7">esc to close.</span>
+      </div>
+    </div>
+
+    <div class="preview-wrap">
+      <div class="tape"></div>
+      <div class="tape tape2"></div>
+
+      <div class="browser">
+        <div class="browser-bar">
+          <div class="dots"><i></i><i></i><i></i></div>
+          <div style="flex:1; text-align:center; opacity:.7">forestx.html — ForestX Client</div>
+          <div style="opacity:.5">● offline</div>
+        </div>
+
+        <div class="browser-screen">
+          <div class="pano">
+            <div></div><div></div><div></div><div></div><div></div><div></div>
+          </div>
+
+          <div class="loading-card">
+            <div class="eyebrow"><span>ForestX v29</span><span>1.8.8</span></div>
+            <h3>Loading <i>ForestX Client…</i></h3>
+            <div class="progress"><i></i></div>
+            <p>This isn't the stock Eagler loading screen. The panorama is rendered with WebGL, dapple light drifts, and your last filter is saved to <code>forestx.prefs</code>.</p>
+          </div>
+
+          <div class="hand-note">
+            <b>built for low-end too</b>
+            postRes: auto → halves on slow GPUs<br>so it doesn't melt your chromebook
+          </div>
+        </div>
+
+        <div class="screen-foot">
+          <span>▣ panorama + post chain · one compile per tweak</span>
+          <span>spin: on · 0.5×</span>
+        </div>
+      </div>
+
+      <div style="position:absolute; left:-6px; bottom:18px; background:white; border:1.5px solid var(--line); padding:7px 10px; font-family:'JetBrains Mono',monospace; font-size:11px; transform:rotate(-1.2deg); box-shadow:3px 3px 0 var(--line);">
+        not a reskin — <b style="background:var(--mustard); padding:1px 4px;">22 live shader params</b>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <span>fullbright · dapple 0.6 · vignette 0.5 · grade on · bloom on · spin 0.5× · pixel 4 · showFps off · showFooter on · packRestore off · fullbright · dapple 0.6 · vignette 0.5 · grade on · bloom on · spin 0.5× · pixel 4 ·</span>
+    <span>fullbright · dapple 0.6 · vignette 0.5 · grade on · bloom on · spin 0.5× · pixel 4 · showFps off · showFooter on · packRestore off · fullbright · dapple 0.6 · vignette 0.5 · grade on · bloom on · spin 0.5× · pixel 4 ·</span>
+  </div>
+
+  <section class="section">
+    <div class="section-head">
+      <h2>What <i>makes it ForestX</i></h2>
+      <p>Single-file EaglercraftX with its own renderer tweaks. The forest isn't a background image — it's a spinning panorama with light leaking through leaves. Everything below is adjustable in-game.</p>
+    </div>
+
+    <div class="grid">
+      <div class="card c1">
+        <div class="meta"><span>01 — live post-processing</span><span>22 knobs</span></div>
+        <h3>Colour <em>that you actually control</em></h3>
+        <p>Not just a filter dropdown. Each preset sets a few values and everything else snaps back to default — then you nudge it live. Changing one rebuilds just that pass (small compile) so you don't sit through a full reload.</p>
+        <div class="chips">
+          <span>brightness 0.5→1.6</span><span>contrast 0.5→1.8</span><span>saturation 0→2</span>
+          <span>warmth -1→1</span><span>haze</span><span>greyscale</span><span>sepia</span><span>posterize</span>
+          <span>invert</span><span>night vision</span><span>thermal</span>
+        </div>
+        <div style="margin-top:10px; font-family:'Patrick Hand',cursive; font-size:13px; color:#4a5a45">“warmth below 0 = cool” — the slider says it plain.</div>
+      </div>
+
+      <div class="card c2">
+        <div class="meta"><span>02 — effects</span><span>no extra tab juggling</span></div>
+        <h3>Film grain, CRT, <em>heat haze</em></h3>
+        <p>All the fun post stuff lives in one chain while it's on — it replaces the built-in Sonnet pass so you don't stack two competing colour pipelines. Try <span class="tag">scanlines</span> + <span class="tag">aberration</span> + <span class="tag">vignette</span> for the wood-panel basement CRT.</p>
+        <div class="chips">
+          <span>vignette</span><span>grain</span><span>scanlines</span><span>aberration</span><span>sharpen</span><span>glow</span><span>pixelate 1→12</span><span>heat wave</span><span>tilt-shift</span><span>edge outline</span><span>mirror</span>
+        </div>
+      </div>
+
+      <div class="card c3">
+        <div class="meta"><span>03 — panorama &amp; atmosphere</span><span>the forest part</span></div>
+        <h3>Dapple <em>through the trees</em></h3>
+        <p>This is why it's called ForestX. The panorama shader scatters warm sun spots that drift with <code>uTime</code>. Dapple amount, vignette, colour grade, fullbright, bloom, pixel density and spin speed are all saved per-browser. I leave <b>vivid</b> on by default — it pops without blowing out the sky.</p>
+        <div class="specs" style="margin-top:12px; grid-template-columns:1fr 1fr; gap:10px">
+          <div style="background:var(--paper2); box-shadow:none; padding:10px">
+            <h4 style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em">defaults I ship</h4>
+            <div style="font-family:'JetBrains Mono',monospace; font-size:11px; line-height:1.7">
+              fullbright <b>off</b> · pixel <b>4</b> · dapple <b>0.6</b><br>
+              vignette <b>0.5</b> · grade <b>on</b> · bloom <b>on</b><br>
+              spin <b>on · 0.5×</b> · sonnet <b>off</b> · postRes <b>auto</b>
+            </div>
+          </div>
+          <div style="background:white; box-shadow:none; padding:10px">
+            <h4 style="margin:0 0 6px; font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.1em">why sonnet off?</h4>
+            <p style="margin:0; font-family:'Instrument Serif',serif; font-size:13px; line-height:1.45">Sonnet is Eagler's built-in post. ForestX has its own. They don't play nice together — so Sonnet is off unless you explicitly turn it on.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card c4">
+        <div class="meta"><span>04 — tools menu</span><span>M to open</span></div>
+        <h3>A real <em>menu</em> for shaders</h3>
+        <p>Press <b>M</b>. It's a 720×486 panel at (120,26) — not a chat command. Tabs for <b>colour</b> and <b>effects</b>, plus a live preset row. Every row knows if it's an effect (rebuilds the pass) or a simple value. It feels like an in-game photo bench.</p>
+        <p style="margin-top:10px; font-family:'JetBrains Mono',monospace; font-size:11px; background:var(--paper2); border:1px solid var(--line); padding:6px 8px; line-height:1.5">
+          fxButton: <b>false</b> default · fxSide: <b>left</b> · saved to <code>localStorage: forestx.prefs</code> · version <b>29</b>
+        </p>
+      </div>
+
+      <div class="card c5" id="presets">
+        <div class="meta"><span>05 — 12 handmade presets</span><span>one click, then tweak</span></div>
+        <h3>Presets are <em>starting points</em>, not Instagram filters</h3>
+        <p>Each one only sets what it needs — the rest resets to clean defaults so you don't inherit cruft. Clean is actually clean. Vivid is the ship default.</p>
+
+        <div class="preset-wall">
+          <div class="preset p-clean"><div class="swatch" style="background:#f6f1e7"></div><h4>Clean</h4><p>no values. just the game.</p></div>
+          <div class="preset p-warm"><div class="swatch" style="background:#d9a441"></div><h4>Warm film</h4><p>warm 0.35 · contrast 1.1 · sat 0.9 · grain 0.25 · vig 0.3 · haze 0.15</p></div>
+          <div class="preset p-vivid"><div class="swatch" style="background:#6fbf4a"></div><h4>Vivid ★ default</h4><p>sat 1.5 · contrast 1.15 · bright 1.05 · glow 0.25 · sharp 0.3</p></div>
+          <div class="preset p-noir"><div class="swatch" style="background:#111712; border-color:#444"></div><h4 style="color:#111">Noir</h4><p>grey 1 · contrast 1.35 · grain 0.35 · vig 0.5</p></div>
+
+          <div class="preset p-crt"><div class="swatch" style="background:#3c86dc"></div><h4>Retro CRT</h4><p>scan 0.5 · aber 0.5 · vig 0.45 · sharp 0.3 · glow 0.2 · warm 0.1</p></div>
+          <div class="preset p-night"><div class="swatch" style="background:#c8f0b0"></div><h4 style="color:#0f2a1a">Night vision</h4><p>night on · grain 0.25 · glow 0.3 · vig 0.4</p></div>
+          <div class="preset p-dream"><div class="swatch" style="background:#b9a6ff"></div><h4>Dreamy</h4><p>glow 0.6 · haze 0.35 · wave 0.3 · sat 1.1 · warm 0.15</p></div>
+          <div class="preset p-mini"><div class="swatch" style="background:#fde3a7"></div><h4>Miniature</h4><p>tilt 0.8 · sat 1.3 · contrast 1.1 · bright 1.05</p></div>
+
+          <div class="preset p-pixel"><div class="swatch" style="background:white"></div><h4 style="color:white">Pixel art</h4><p>pixel 4 · posterize 0.5 · sat 1.2 · edge 0.25</p></div>
+          <div class="preset p-sepia"><div class="swatch" style="background:#8b6a3d"></div><h4>Sepia</h4><p>sepia 0.9 · vig 0.3 · grain 0.15 · contrast 1.05</p></div>
+          <div class="preset p-thermal"><div class="swatch" style="background:#fff"></div><h4>Thermal</h4><p>thermal on · glow 0.1 · heat-map colours</p></div>
+          <div class="preset p-mirror"><div class="swatch" style="background:#7bb369"></div><h4>Mirror world</h4><p>mirror on · sat 0.7 · warm -0.3 · flips horizontally</p></div>
+        </div>
+
+        <div style="margin-top:12px; font-family:'JetBrains Mono',monospace; font-size:11px; display:flex; gap:8px; flex-wrap:wrap; align-items:center">
+          <span style="border:1px solid var(--line); padding:5px 8px; background:white">fxPresetApply() sets values + name</span>
+          <span style="border:1px solid var(--line); padding:5px 8px; background:var(--mustard)">fxSetOn(true) builds the pass once</span>
+          <span style="opacity:.6">change one slider → rebuilds that pass only</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="specs">
+      <div>
+        <h4>Under the hood — not magic, just Wasm</h4>
+        <div style="line-height:1.7">
+          <b>EaglercraftX 1.8</b> single-file · <code>Wasm-GC</code> for server + mesh<br>
+          <code>BrotliDecStream</code> streaming decode · payloads inside <code>&lt;script type="application/octet-stream"&gt;</code><br>
+          inline IDs: <code>eag-inline-mesh-wasm-br</code> · <code>eag-inline-server-wasm-br</code> · <code>eag-inline-assets</code><br>
+          assets: <code>assets.epk</code> / <code>sounds.epk</code> resolved via <code>eagler-inline-payload://</code>
+        </div>
+      </div>
+      <div>
+        <h4>Performance — respects your machine</h4>
+        <div style="line-height:1.7">
+          postRes <b>auto</b> halves render scale on slow GPUs · <code>maxSliceMs</code> tracked per decode slice<br>
+          <code>wasmCache</code> + <code>decoderWorkers</code> reused · crash journal in <code>localStorage</code> (7-day window)<br>
+          rotate-device overlay for phones — ForestX wants landscape
+        </div>
+      </div>
+    </div>
+
+    <div class="quote">
+      <div>
+        <blockquote>
+          I make Eaglercraft clients because I love tweaking how a block game <i>feels</i>. ForestX is the one I keep coming back to.
+        </blockquote>
+        <cite>— forestX-client · builder of a few clients, this one is the favourite</cite>
+      </div>
+      <div class="side">
+        <b style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em">why v29?</b><br>
+        v29 makes <b>vivid</b> the default look and keeps <b>sonnet off</b> unless you want it. Old saves migrate once — new defaults, same worlds. If you saved on v28, you'll get the new vivid defaults on first load.
+      </div>
+    </div>
+
+    <div class="section-head" style="margin-top:22px">
+      <h2>How to <i>play</i></h2>
+      <p>It's one HTML file. Drop it anywhere — no host needed beyond the first load. Works on GitHub Pages, Netlify, or just double-click.</p>
+    </div>
+
+    <div class="how">
+      <div data-n="01 — launch">
+        <h4>Hit Launch</h4>
+        <p>The client opens in the same tab. First load streams the Wasm and assets (~30 MB). After that it's cached — you can go offline.</p>
+        <p style="margin-top:8px"><code>forestx.html</code> is the game. This page is just the cover.</p>
+      </div>
+      <div data-n="02 — tweak">
+        <h4>Press M → tweak live</h4>
+        <p>Try <b>Vivid</b>, then nudge <b>warmth</b> down to -0.3 for a cooler forest morning. Grain + vignette for photos, pixelate for that chunky retro feel.</p>
+        <p style="margin-top:8px; font-family:'Patrick Hand',cursive">everything saves to <code>forestx.prefs</code> automatically</p>
+      </div>
+      <div data-n="03 — keep playing">
+        <h4>Your worlds stay</h4>
+        <p>Singleplayer saves live in <code>localStorage</code> + IndexedDB. Back them up from the pause menu. Updating the client HTML doesn't wipe them — unless you clear site data.</p>
+        <p style="margin-top:8px">multiplayer: any 1.8 server works. EaglercraftX protocol.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:18px; border:1.5px dashed var(--line); background:#fdfbf5; padding:12px 14px; display:flex; gap:12px; align-items:center; flex-wrap:wrap; font-family:'JetBrains Mono',monospace; font-size:11px">
+      <span style="background:var(--forest); color:white; padding:4px 8px; letter-spacing:.08em">NOTE FOR SELF</span>
+      <span>built with a real panorama shader, not a png. if it looks too clean, add grain. — forestX</span>
+      <span style="margin-left:auto; font-family:'Patrick Hand',cursive; font-size:14px; color:#5a6b58">↳ and turn fullbright off outside.</span>
+    </div>
+  </section>
+
+  <!-- tiny detail strip -->
+  <div style="display:grid; grid-template-columns: 1fr auto 1fr; gap:12px; align-items:center; margin:18px 0 0; opacity:.7">
+    <div style="height:1px; background:var(--line);"></div>
+    <div style="font-family:'JetBrains Mono',monospace; font-size:10px; letter-spacing:.18em; text-transform:uppercase; border:1px solid var(--line); padding:5px 10px; background:white; transform:rotate(-0.6deg)">made in the woods · 2025</div>
+    <div style="height:1px; background:var(--line);"></div>
+  </div>
+
+  <footer>
+    <div>
+      <div class="sig">built and broken in the woods — <span class="scribble-underline">forestX-client</span></div>
+      <div style="opacity:.6; margin-top:4px">I make Eaglercraft clients. ForestX is the best one yet — but I'm still tinkering.</div>
+    </div>
+    <div class="footer-links">
+      <a href="https://github.com/forestX-client/forestX-client">GitHub repo ↗</a>
+      <a href="./forestx.html">Open client directly ↗</a>
+      <a href="#" onclick="event.preventDefault(); alert('Tools: press M in-game. Preferences: localStorage key forestx.prefs, version 29. To reset, clear site data or run localStorage.removeItem(\'forestx.prefs\') in console.');">Reset help</a>
+    </div>
+  </footer>
+</div>
+
+<script>
+  // check if client bundle exists — subtle, not a placeholder block
+  (async () => {
+    const el = document.getElementById('bundleState');
+    const btn = document.getElementById('launchBtn');
+    const candidates = ['./forestx.html', './forestx-v29.html', './client.html'];
+    let found = null;
+    for (const url of candidates) {
+      try {
+        const r = await fetch(url, {method:'HEAD', cache:'no-store'});
+        if (r.ok) { found = url; break; }
+      } catch {}
+    }
+    if (found) {
+      btn.setAttribute('href', found);
+      el.textContent = 'bundle ready ✓ — ' + found.replace('./','');
+      el.style.background = '#e8f5d8';
+      el.style.borderColor = '#2f4f2a';
+    } else {
+      // check if parts are present as split uploads (the 4-part flow)
+      el.textContent = 'bundle will appear here when deployed';
+      el.style.opacity = '.7';
+      // keep button linking to expected location — GitHub Pages will serve it once file is pushed
+      // add gentle hint on click instead of scary placeholder
+      btn.addEventListener('click', (e) => {
+        // let navigation happen; if 404 the browser shows normal 404 — we don't inject big placeholder text
+        // but give a moment to hint
+        if (!found) {
+          // allow the click to proceed; after 120ms if still on this page, show toast
+          setTimeout(() => {
+            if (document.visibilityState === 'visible') {
+              el.textContent = 'still publishing — check GitHub Pages in a minute';
+              el.style.background = '#fff3cd';
+              el.style.borderColor = '#8a6a15';
+            }
+          }, 140);
+        }
+      });
+    }
+  })();
+</script>
+
+<!-- quiet forest doodle in corner (hand-drawn vibe) -->
+<svg aria-hidden="true" style="position:fixed; right:10px; bottom:10px; width:120px; height:90px; opacity:.18; pointer-events:none" viewBox="0 0 120 90" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M10 78 L30 18 L50 78" stroke="#1a2e1e" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+  <path d="M18 58 L42 58 M22 44 L38 44 M26 30 L34 30" stroke="#1a2e1e" stroke-width="1.2" />
+  <path d="M45 78 L65 12 L85 78" stroke="#1a2e1e" stroke-width="1.8" />
+  <path d="M52 62 L78 62 M56 48 L74 48 M60 34 L70 34" stroke="#1a2e1e" stroke-width="1.3" />
+  <path d="M80 78 L100 28 L118 78" stroke="#1a2e1e" stroke-width="1.6" />
+  <path d="M0 78 Q60 74 120 78" stroke="#1a2e1e" stroke-width="1.2" />
+</svg>
+</body>
+</html>
